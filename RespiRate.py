@@ -96,7 +96,7 @@ class Gui(QtWidgets.QMainWindow):
             'Download it from https://github.com/MDA-Courtyard/RespiRate/releases.')
             infoNotif('RespiRate', msg_up)
         else:
-            msg_up = 'You have the latest avaliable version of RespiRate.'
+            msg_up = 'You have the latest available version of RespiRate.'
             infoNotif('RespiRate', msg_up)
 
 
