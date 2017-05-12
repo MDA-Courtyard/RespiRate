@@ -12,6 +12,7 @@ import sys
 import cv2
 import numpy as np
 from PyQt5 import QtWidgets, QtCore, QtGui
+import requests
 from RespiRateUI import Ui_MainWindow
 import MouseVideo as mv
 import MouseFunctions as mf
@@ -19,7 +20,7 @@ import peakdetect as pd
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
 from tkinter import Tk, Label, Entry, Button, mainloop
-from notifiCat import errorNotif, askQuestion
+from notifiCat import errorNotif, askQuestion, infoNotif
 
 class Gui(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
@@ -30,6 +31,7 @@ class Gui(QtWidgets.QMainWindow):
         self.ui.actionOpen_video.triggered.connect(self.openNew)
         self.ui.actionOpen_spreadsheet.triggered.connect(self.openOutput)
         self.ui.actionQuit.triggered.connect(self.closeAll)
+        self.ui.actionCheck_for_Update.triggered.connect(self.updateCheck)
         self.ui.actionAbout.triggered.connect(self.About)
         self.ui.actionAbout_Qt.triggered.connect(self.AboutQt)
         self.slide = self.ui.horizontalSlider
@@ -65,6 +67,7 @@ class Gui(QtWidgets.QMainWindow):
         self.lastframe = 0
         self.length = 0
         self.numberOfMice = 0
+        self.version = '0.0.1'
         self._timer = QtCore.QTimer(self)
         if self.cont == 0:
             self._timer.timeout.connect(self.captureNextFrame)
@@ -80,6 +83,21 @@ class Gui(QtWidgets.QMainWindow):
         cv2.destroyAllWindows()
         self._timer.stop()
         sys.exit(0)
+
+
+    def updateCheck(self):
+        '''Check for updates.'''
+        resp = requests.get('https://github.com/MDA-Courtyard/RespiRate/releases/')
+        data = str(resp.text)
+        index = data.find('RespiRate/releases/tag/v')
+        upstream_ver =  data[index + 32] + data[index + 33] + data[index + 34] + data[index + 35] + data[index + 36]
+        if upstream_ver > self.version:
+            msg_up = ('Version '+upstream_ver+' has been released.\n'
+            'Download it from https://github.com/MDA-Courtyard/RespiRate/releases.')
+            infoNotif('RespiRate', msg_up)
+        else:
+            msg_up = 'You have the latest avaliable version of RespiRate.'
+            infoNotif('RespiRate', msg_up)
 
 
     def About(self):

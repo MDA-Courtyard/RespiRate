@@ -10,7 +10,7 @@ instructions expect Python 3.6 (Anaconda is recommended).
 
  Python 2 is **not** supported.
 
- - matplotlib, numpy, pyqt5, qt5, scipy, subprocess, and tkinter:  
+ - matplotlib, numpy, pyqt5, qt5, requests, scipy, subprocess, and tkinter:  
  `conda install matplotlib, numpy, pyqt=5, qt=5, scipy, tkinter`
 
  - xlutils:  

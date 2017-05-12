@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (C) 2017 Ashlar Ruby
-Licensed under the MIT license. See COPYING.md for details. -->
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
@@ -550,6 +548,7 @@ p, li { white-space: pre-wrap; }
     <property name="title">
      <string>Help</string>
     </property>
+    <addaction name="actionCheck_for_Update"/>
     <addaction name="actionAbout"/>
     <addaction name="actionAbout_Qt"/>
    </widget>
@@ -580,6 +579,11 @@ p, li { white-space: pre-wrap; }
   <action name="actionOpen_spreadsheet">
    <property name="text">
     <string>Open Spreadsheet</string>
+   </property>
+  </action>
+  <action name="actionCheck_for_Update">
+   <property name="text">
+    <string>Check for Update</string>
    </property>
   </action>
  </widget>

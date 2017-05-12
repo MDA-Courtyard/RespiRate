@@ -286,9 +286,12 @@ class Ui_MainWindow(object):
         self.actionAbout_Qt.setObjectName("actionAbout_Qt")
         self.actionOpen_spreadsheet = QtWidgets.QAction(MainWindow)
         self.actionOpen_spreadsheet.setObjectName("actionOpen_spreadsheet")
+        self.actionCheck_for_Update = QtWidgets.QAction(MainWindow)
+        self.actionCheck_for_Update.setObjectName("actionCheck_for_Update")
         self.menuFile.addAction(self.actionOpen_video)
         self.menuFile.addAction(self.actionOpen_spreadsheet)
         self.menuFile.addAction(self.actionQuit)
+        self.menuHelp.addAction(self.actionCheck_for_Update)
         self.menuHelp.addAction(self.actionAbout)
         self.menuHelp.addAction(self.actionAbout_Qt)
         self.menubar.addAction(self.menuFile.menuAction())
@@ -326,6 +329,7 @@ class Ui_MainWindow(object):
         self.actionAbout.setText(_translate("MainWindow", "About"))
         self.actionAbout_Qt.setText(_translate("MainWindow", "About Qt"))
         self.actionOpen_spreadsheet.setText(_translate("MainWindow", "Open Spreadsheet"))
+        self.actionCheck_for_Update.setText(_translate("MainWindow", "Check for Update"))
 
 
 if __name__ == "__main__":
@@ -336,4 +340,3 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
-
