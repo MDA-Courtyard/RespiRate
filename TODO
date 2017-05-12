@@ -1,8 +1,6 @@
 TODO:
 ===============================================================================
 
-Add an update checker (and possibly handle downloading updates?)
-
 LONG TERM:
 ===============================================================================
 Move everything to Qt
@@ -63,3 +61,5 @@ DONE: handle graphs cutting off part of title and x-label
 DONE: combine tick() with moveSlide()
 
 DONE: non-strict video names
+
+DONE: allow user to check for a new release
