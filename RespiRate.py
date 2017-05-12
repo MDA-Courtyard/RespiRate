@@ -535,7 +535,7 @@ class Gui(QtWidgets.QMainWindow):
 
         except ZeroDivisionError:
             msg = ('The selected region on '+ str(mouseNumList[numba])+
-                'is not suitable for respiration measurements')
+                ' is not suitable for respiration measurements')
             errorNotif(msg)
 
         # Close the secondary windows.
