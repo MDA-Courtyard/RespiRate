@@ -140,7 +140,7 @@ measurements, such as a region in which the camera is out of focus, the program
 will stop running with a warning.
 
 ## Licensing
-RespiRate is copyright 2017 by A Rubinstien and S Gay. All source and binary
+RespiRate is copyright 2017 by A. Rubinstein and S. Gay. All source and binary
 files, with the exception of the opencv_ffmpeg dll files, are provided under the
 MIT license. The opencv_ffmpeg dll files are copyright by Fabrice Bellard and
 licensed under the LGPL.
