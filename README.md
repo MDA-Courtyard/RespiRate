@@ -119,6 +119,7 @@ will occur on the first run of the program.
 RespiRate comes with robust error-checking functionality to detect user-input
 mistaked or runtime errors that would cause it to fail.
 
+<br><br><br>
 ![](data/error_novid.png)  
 If the video did not load correctly or was not selected at all, you will be
 prompted when pressing the “Contour” button to go back and select a video from
@@ -138,10 +139,11 @@ If you have selected a region on a mouse that is not suitable for respiratory
 measurements, such as a region in which the camera is out of focus, the program
 will stop running with a warning.
 
+<br><br><br>
 ## Licensing
 RespiRate is copyright 2017 by A. Rubinstein and S. Gay. All source and binary
 files, with the exception of the opencv_ffmpeg dll files, are provided under the
 MIT license. The opencv_ffmpeg dll files are copyright by Fabrice Bellard and
 licensed under the LGPL.
 
-See COPYING.md for licenses and a list of all contributors.
+See [COPYING.md](Copying.md) for licenses and a list of all contributors.
