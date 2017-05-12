@@ -24,7 +24,7 @@ The opencv_ffmpeg320.dll and opencv_ffmpeg320_64.dll files are licensed under
 the LGPL v2.1 license, also reproduced below.
 
 ## MIT License:  
-Copyright (C) 2017 Ashley E. Rubenstein and Skylar S. Gay
+Copyright (C) 2017 A. Rubinstein and S. Gay
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
