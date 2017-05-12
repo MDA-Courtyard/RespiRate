@@ -146,4 +146,4 @@ files, with the exception of the opencv_ffmpeg dll files, are provided under the
 MIT license. The opencv_ffmpeg dll files are copyright by Fabrice Bellard and
 licensed under the LGPL.
 
-See [COPYING.md](Copying.md) for licenses and a list of all contributors.
+See [COPYING.md](COPYING.md) for licenses and a list of all contributors.
