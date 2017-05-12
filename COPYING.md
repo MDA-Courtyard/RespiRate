@@ -3,9 +3,9 @@ RespiRate was written by the following authors:
  - S. Gay
 
 Additionally, we use portions of code published by the following authors:
- - Fabrice Bellard
+ - Fabrice Bellard  
     opencv_ffmpeg320*.dll
- - Sixten Bergman
+ - Sixten Bergman  
     peakdetect.py
 
 We use PyQt5 and Tkinter toolkits to provide our graphical interfaces, and

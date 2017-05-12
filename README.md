@@ -3,7 +3,7 @@ RespiRate is an easy-to-use tool for measuring the respiration rate of
 laboratory mice from videos. Requiring nothing more than standard Windows
 utilities and (optionally) spreadsheet software such as Excel or LibreOffice, it
 provides the following features:
- - Point-and-click interface for easy use.
+ - Point-and-click interface for simple workflow.
  - User-defineable start time and length of measurement.
  - Graphs of the mice's respiration over the entire measurement period.
  - Calculation of the respiratory rate of one or more mice, along with the
@@ -23,12 +23,14 @@ https://github.com/MDA-Courtyard/RespiRate/releases.
 
 Use RespiRate_x64.exe for Windows 64-bit, and RespiRate_x32.exe for Windows
 32-bit.
+
 <br><br><br><br>
 ## Using RespiRate
 ![](data/mainwin.png)  
 This is the main program window, where the video is loaded. From here, you can
 provide several required inputs, control the program, and check the results of
 each measurement.
+
 <br><br><br>
 ![](data/open_vid.png)  
 First, select the video you want to measure by selecting the File menu, then
@@ -63,7 +65,7 @@ define each vertex of the region. If you want to undo a left-click, press the
 
 Once you are satisfied with the region, press q.
 
-<br>
+
 ![](data/Contour_130B.png)  
 Provide the ID of the mouse you have just contoured. You will need to use the
 ID you want to appear in the returned data.
@@ -114,7 +116,7 @@ If you choose to export the data and a suitable spreadsheet is not found in the
 current working folder, you will be prompted to generate one automatically. This
 will occur on the first run of the program.  
 
-
+<br><br><br><br>
 ## Error Detection
 RespiRate comes with robust error-checking functionality to detect user-input
 mistaked or runtime errors that would cause it to fail.
@@ -139,7 +141,7 @@ If you have selected a region on a mouse that is not suitable for respiratory
 measurements, such as a region in which the camera is out of focus, the program
 will stop running with a warning.
 
-<br><br><br>
+<br><br><br><br>
 ## Licensing
 RespiRate is copyright 2017 by A. Rubinstein and S. Gay. All source and binary
 files, with the exception of the opencv_ffmpeg dll files, are provided under the

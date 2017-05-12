@@ -2,28 +2,28 @@ Instructions for building standalone executeables for Windows. These
 instructions expect Python 3.6 (Anaconda is recommended).
 
 ### Prerequisites
- - Python 3.6.
+ - Python 3.6.  
  It is possible to build a standalone Windows executable with earlier versions
  of Python 3, but you will need to adjust the instructions accordingly and edit
  `setup_win.py` so that it calls pyinstaller as a globally installed program,
  not as a python script.
 
- Python 2 is NOT supported.
+ Python 2 is **not** supported.
 
- - matplotlib, numpy, pyqt5, qt5, scipy, subprocess, and tkinter:
+ - matplotlib, numpy, pyqt5, qt5, scipy, subprocess, and tkinter:  
  `conda install matplotlib, numpy, pyqt=5, qt=5, scipy, tkinter`
 
- - xlutils:
+ - xlutils:  
  `pip install xlutils`
 
- - the current development version of PyInstaller:
+ - The current development version of PyInstaller:  
  Download from https://github.com/pyinstaller/pyinstaller/zipball/develop.
  We require the development version since the stable releases do not support
  Python 3.6. If you are willing to edit setup_win.py as required, you could
  probably generate a successful build with an earlier version of Python 3 and
  the stable release of PyInstaller.
 
- - opencv compiled with ffmpeg support.
+ - OpenCV compiled with ffmpeg support.  
  Download from http://www.lfd.uci.edu/~gohlke/pythonlibs/#opencv. For 64-bit
  computers, download opencv_python‑3.2.0‑cp36‑cp36m‑win_amd64.whl. For 32-bit,
  download opencv_python‑3.2.0‑cp36‑cp36m‑win32.whl.
