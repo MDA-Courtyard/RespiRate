@@ -1,0 +1,11 @@
+build/
+dist/
+pyinstaller/
+__pycache__/
+Output/
+
+build.bat
+output1.xls
+*.mp4
+*.iss
+*.spec

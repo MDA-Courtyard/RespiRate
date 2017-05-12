@@ -1,0 +1,66 @@
+TODO:
+===============================================================================
+Replace internal code names.
+
+Add an update checker (and possibly handle downloading updates?)
+
+LONG TERM:
+===============================================================================
+Move everything to Qt
+
+If the spreadsheet is opened, allow the user to close it and then
+export data, rather than having to rerun
+
+Sign Windows installer
+
+Allow the user to save the spreadsheet wherever he/she wants.
+
+Consider changing errorCheck to a class so we can use individual parts when
+needed instead of having to run the whole thing every time
+
+Use a dedicated Qt window for the videos so we can look at cross-platform
+
+DONE:
+===============================================================================
+DONE: Remove unused checkBox
+
+DONE: Assign descriptive names in the Qt UI code
+
+DONE: Generate output.xls if one does not already exist
+
+DONE: Fix `Quit` option where only the main window closes
+
+DONE: Move to Qt 5
+
+DONE: Move to Python 3
+
+DONE: get opencv dll for Windows 32-bit
+
+DONE: Only one graph per mouse
+
+DONE: handle multiple data graphs in a single plot.
+
+DONE: handle multiple plots for the same mouse.
+
+DONE: sucessful builds for python 3.6 with PyInstaller dev
+
+DONE: Create output folder in user's home directory for output1.xls
+
+DONE: notify if the measurement terminates before the set measurement interval,
+for example if the trackers are lost after a few seconds of run time.
+
+DONE: handle window crashes:
+ - occurred from ZeroDivisionError around line 107 if the user pressed 'Cancel'
+ when opening a video, or did not open a video file.
+ - occurred from ZeroDivisionError on line 400 if all tracker points on a mouse
+ are lost.
+ - occurred from OpenCVError around line 139 when self.currentFrame is defined
+ if self.filename is not actually a video.
+
+DONE: only use os.path.join for file paths
+
+DONE: handle graphs cutting off part of title and x-label
+
+DONE: combine tick() with moveSlide()
+
+DONE: non-strict video names
