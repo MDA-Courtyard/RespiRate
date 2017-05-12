@@ -1,5 +1,5 @@
 # RespiRate
-RespiRate is an easy-to-use tool for measuring the respiration rate of
+RespiRate is an easy-to-use tool for measuring the respiratory rate of
 laboratory mice from videos. Requiring nothing more than standard Windows
 utilities and (optionally) spreadsheet software such as Excel or LibreOffice, it
 provides the following features:
@@ -13,8 +13,8 @@ provides the following features:
 
 Existing technologies require both expensive equipment and physical manipulation
 of the mice, and do not allow "capture once, analyze anywhere." With RespiRate,
-nothing more is required than a standard Windows 7 (or higher) computer and a
-video of lab mice at rest. You can calculate their respiratory rate at any
+nothing more is required than a standard Windows Vista (or higher) computer and
+a video of lab mice at rest. You can calculate their respiratory rate at any
 location, at any time.
 
 ## Installation

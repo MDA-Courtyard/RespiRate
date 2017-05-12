@@ -6,7 +6,7 @@ import ctypes
 import itertools
 from os import path
 import re
-from platform import system
+from platform import platform, system
 from subprocess import call
 import sys
 import cv2
@@ -587,8 +587,9 @@ class Gui(QtWidgets.QMainWindow):
 def main():
 
     if system() == 'Windows': # Needed to display the icon in the taskbar
-        myappid = 'RespiRate'
-        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+        if not 'Vista' in platform(): # Vista doesn't recognize this but works anyway.
+            myappid = 'RespiRate'
+            ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
     app=QtWidgets.QApplication.instance()
 
