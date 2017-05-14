@@ -67,7 +67,7 @@ class Gui(QtWidgets.QMainWindow):
         self.lastframe = 0
         self.length = 0
         self.numberOfMice = 0
-        self.version = '0.0.1'
+        self.version = '0.0.2~development'
         self._timer = QtCore.QTimer(self)
         if self.cont == 0:
             self._timer.timeout.connect(self.captureNextFrame)
@@ -93,7 +93,7 @@ class Gui(QtWidgets.QMainWindow):
         upstream_ver =  data[index + 32] + data[index + 33] + data[index + 34] + data[index + 35] + data[index + 36]
         if upstream_ver > self.version:
             msg_up = ('Version '+upstream_ver+' has been released.\n'
-            'Download it from https://github.com/MDA-Courtyard/RespiRate/releases.')
+            'Download it from https://github.com/MDA-Courtyard/RespiRate/releases.\n')
             infoNotif('RespiRate', msg_up)
         else:
             msg_up = 'You have the latest available version of RespiRate.'
@@ -103,14 +103,15 @@ class Gui(QtWidgets.QMainWindow):
     def About(self):
         '''Brief description of the program.'''
         title = 'About'
-        msg = ('\nRespiRate v 0.0.1\n'
-                'Copyright (C) 2017 Ashlar Ruby.\n'
-                'Licensed under the MIT license.\n\n'
-                'This program uses opencv_ffmpeg320 libraries, released\n'
-                'and copyrighted 2001 under the LGPL by Fabrice Bellard,\n'
-                'and the PyQt5 and Tkinter graphical toolkits.\n\n'
-                'See online documentation for a full list of contributors:\n'
-                'https://github.com/MDA-Courtyard/RespiRate/COPYING.md')
+        msg = ('<p><br><b>RespiRate v'+self.version+'</b></br>'
+                '<br>Copyright (C) 2017 Ashlar Ruby</br>'
+                '<br>Licensed under the MIT license.</br></p>'
+                '<p>This program uses opencv_ffmpeg320 libraries, released'
+                '<br>and copyrighted 2001 under the LGPL by Fabrice Bellard,</br>'
+                '<br>and the PyQt5 and Tkinter graphical toolkits.</br></p>'
+                '<p><a href="https://github.com/MDA-Courtyard/RespiRate">Home Page</a>'
+                '<br><a href="https://github.com/MDA-Courtyard/RespiRate/releases">Releases</a></br>'
+                '<br><a href="https://github.com/MDA-Courtyard/RespiRate/blob/master/COPYING.md">Contributors and License</a></br></p>')
         QtWidgets.QMessageBox.about(self, title, msg)
 
 
