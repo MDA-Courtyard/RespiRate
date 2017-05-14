@@ -5,6 +5,7 @@ __pycache__/
 Output/
 
 build.bat
+build32.bat
 output1.xls
 *.mp4
 *.iss
