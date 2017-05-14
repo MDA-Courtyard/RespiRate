@@ -110,7 +110,7 @@ class Gui(QtWidgets.QMainWindow):
                 '<br>and copyrighted 2001 under the LGPL by Fabrice Bellard,</br>'
                 '<br>and the PyQt5 and Tkinter graphical toolkits.</br></p>'
                 '<p><a href="https://github.com/MDA-Courtyard/RespiRate">Home Page</a>'
-                '<br><a href="https://github.com/MDA-Courtyard/RespiRate/releases">Releases</a></br>'
+                '<br><a href="https://github.com/MDA-Courtyard/RespiRate/issues">Help</a></br>'
                 '<br><a href="https://github.com/MDA-Courtyard/RespiRate/blob/master/COPYING.md">Contributors and License</a></br></p>')
         QtWidgets.QMessageBox.about(self, title, msg)
 
