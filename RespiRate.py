@@ -487,6 +487,9 @@ class Gui(QtWidgets.QMainWindow):
                         'weight': 'normal',
                         'size': 12}
 
+                # debugging
+                print(numba)
+
                 # Plotting
                 print('distInd', distInd)
                 xaxis = range(0, len(pointx[numba]))
@@ -556,7 +559,7 @@ class Gui(QtWidgets.QMainWindow):
                     sheetName = 'Sheet1'
                     mf.xOutput(toPrintList, workBook, sheetName)
 
-        except ZeroDivisionError:
+        except ZeroDivisionError or IndexError:
             msg = ('The selected region on '+ str(mouseNumList[numba])+
                 ' is not suitable for respiration measurements')
             errorNotif(self, msg)
