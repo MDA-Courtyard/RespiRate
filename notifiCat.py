@@ -2,6 +2,8 @@
 # notifiCat.py
 # Copyright (C) 2017 Ashlar Ruby
 # Licensed under the MIT license. See COPYING.md for details.
+from PyQt5.QtWidgets import QWidget, QMessageBox
+from PyQt5 import QtCore
 from tkinter import Tk, messagebox
 # Meow
 '''
@@ -9,21 +11,16 @@ Use me to display notifications. I can be used in multiple functions
 simultaneously so you don't end up with redundant/conflicting code.
 '''
 
-def errorNotif(msg):
+def errorNotif(self, msg):
     '''Display an error or warning message.'''
     # Used in RespiRate and MouseFunctions
-    root = Tk()
-    root.withdraw()
-    messagebox.showerror('Error', msg)
-    root.destroy()
+    QMessageBox.warning(self, 'Error', '\n'+msg+'\n')
 
-def infoNotif(title, msg):
+#
+def infoNotif(self, title, msg):
     '''Display a notification message.'''
-    # Used in MouseFunctions
-    root = Tk()
-    root.withdraw()
-    messagebox.showinfo(title, msg)
-    root.destroy()
+    # Used in RespiRate and MouseFunctions
+    QMessageBox.information(self, title, '\n'+msg+'\n')
 
 def askQuestion(title, msg):
     '''Ask a question with a yes/no dialog.'''

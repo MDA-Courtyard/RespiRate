@@ -92,12 +92,13 @@ class Gui(QtWidgets.QMainWindow):
         index = data.find('RespiRate/releases/tag/v')
         upstream_ver =  data[index + 32] + data[index + 33] + data[index + 34] + data[index + 35] + data[index + 36]
         if upstream_ver > self.version:
-            msg_up = ('Version '+upstream_ver+' has been released.\n'
-            'Download it from https://github.com/MDA-Courtyard/RespiRate/releases.\n')
-            infoNotif('RespiRate', msg_up)
+            url = str("https://github.com/MDA-Courtyard/RespiRate/releases/tag/v"+upstream_ver)
+            msg_up = ('<p>Version '+upstream_ver+' has been released.'
+            '<br>Download it from <a href="%s">here</a>.</br></p>' %url)
+            infoNotif(self, 'RespiRate', msg_up)
         else:
             msg_up = 'You have the latest available version of RespiRate.'
-            infoNotif('RespiRate', msg_up)
+            infoNotif(self, 'RespiRate', msg_up)
 
 
     def About(self):
@@ -147,7 +148,7 @@ class Gui(QtWidgets.QMainWindow):
                 self.captureNextFrame()
 
         except ZeroDivisionError:
-            errorNotif('Not a recognized video format.')
+            errorNotif(self, 'Not a recognized video format.')
             self.filename = 0
 
     def openOutput(self):
@@ -535,10 +536,11 @@ class Gui(QtWidgets.QMainWindow):
 
             # Measurement terminated before full run time
             if endTime != self.endTimemsec:
-                errorNotif('Measurement did not run for entire set length.')
+                errorNotif(self, 'Measurement did not run for entire set length.')
 
             # Ask if we want to export data to a spreadsheet
-            export = askQuestion('RespiRate', 'Export data to spreadsheet?')
+            export = askQuestion(self, 'RespiRate', 'Export data to spreadsheet?')
+            print('export', export)
             if export == 'yes':
                 for numba in range(0, self.numberOfMice):
                     # videoNum = re.search('Video (.*)\.', self.filename).group(1)
@@ -555,7 +557,7 @@ class Gui(QtWidgets.QMainWindow):
         except ZeroDivisionError:
             msg = ('The selected region on '+ str(mouseNumList[numba])+
                 ' is not suitable for respiration measurements')
-            errorNotif(msg)
+            errorNotif(self, msg)
 
         # Close the secondary windows.
         cv2.destroyAllWindows()
@@ -574,12 +576,12 @@ class Gui(QtWidgets.QMainWindow):
         # selected file is actually a video, but only if a file (any type) has
         # been chosen.
         if self.filename == 0 or self.filename == u'':
-            errorNotif(msg_video)
+            errorNotif(self, msg_video)
             return 'error'
 
         # Check if measurement length makes sense
         elif len_measure.isdigit() == False:
-            errorNotif(msg_len)
+            errorNotif(self, msg_len)
             return 'error'
 
         # Check the following:
@@ -587,18 +589,18 @@ class Gui(QtWidgets.QMainWindow):
         # - Second and minute input don't go above 59
         # - Start time input is only integers (no letters or special characters)
         elif len(tsec) != 8:
-            errorNotif(msg_time)
+            errorNotif(self, msg_time)
             return 'error'
         elif tsec[2] != ':' or tsec[5] != ':':
-            errorNotif(msg_time)
+            errorNotif(self, msg_time)
             return 'error'
         elif 1 == 1: # Bit of a ugly hack
             for num in time_check:
                 if num.isdigit() == False:
-                    errorNotif(msg_time)
+                    errorNotif(self, msg_time)
                     return 'error'
         elif int(time_check[-1]) > 59 or int(time_check[-2]) > 59:
-            errorNotif(msg_time)
+            errorNotif(self, msg_time)
             return 'error'
 
 
