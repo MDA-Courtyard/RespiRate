@@ -178,6 +178,8 @@ class Gui(QtWidgets.QMainWindow):
                               QtGui.QImage.Format_RGB888)
             self.img = QtGui.QPixmap(self.img)
             self.ui.videoFrame.setPixmap(self.img.scaled(self.ui.videoFrame.size(), QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
+            if self.capture.get(0) >= self.endTimemsec:
+                self.capture.set(0, self.startTimemsec)
             self._timer.timeout.connect(self.tick)
             self._timer.start()
 
