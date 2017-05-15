@@ -539,7 +539,7 @@ class Gui(QtWidgets.QMainWindow):
                 errorNotif(self, 'Measurement did not run for entire set length.')
 
             # Ask if we want to export data to a spreadsheet
-            export = askQuestion(self, 'RespiRate', 'Export data to spreadsheet?')
+            export = askQuestion('RespiRate', 'Export data to spreadsheet?')
             print('export', export)
             if export == 'yes':
                 for numba in range(0, self.numberOfMice):
