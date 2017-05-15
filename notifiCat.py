@@ -20,6 +20,8 @@ def errorNotif(self, msg):
 def infoNotif(self, title, msg):
     '''Display a notification message.'''
     # Used in RespiRate and MouseFunctions
+    if self == 'noself':
+        self = QWidget()
     QMessageBox.information(self, title, '\n'+msg+'\n')
 
 def askQuestion(title, msg):

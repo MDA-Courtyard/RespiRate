@@ -63,7 +63,7 @@ def xOutput(toPrintList, workBook, sheetName):
                     book.save(file_path)
                     created_msg = ('Spreadsheet was created as `output1.xls` in'
                             ' the RespiRate folder.')
-                    notifiCat.infoNotif('Success!', created_msg)
+                    notifiCat.infoNotif('noself', 'Success!', created_msg)
                 else:
                     return
             # The file exists (or was just created) - now write output.
