@@ -10,3 +10,5 @@ output1.xls
 *.mp4
 *.iss
 *.spec
+
+!sample.mp4

@@ -1,6 +1,6 @@
 TODO:
 ===============================================================================
-Add sample video to GitHub repo.
+
 
 LONG TERM:
 ===============================================================================
@@ -64,3 +64,5 @@ DONE: combine tick() with moveSlide()
 DONE: non-strict video names
 
 DONE: allow user to check for a new release
+
+DONE: Add sample video to GitHub repo
