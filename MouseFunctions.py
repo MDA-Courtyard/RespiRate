@@ -89,5 +89,5 @@ def xOutput(toPrintList, workBook, sheetName):
             # If we get this far, the spreadsheet cannot be opened (most likely
             # it is already opened in Excel or another program). Check it, close
             # it, and rerun it. Working now?
-            notifiCat.errorNotif('Data cannot be exported!\n'
+            notifiCat.errorNotif('noself','Data cannot be exported!\n'
                     'Please check if the spreadsheet is already opened.')

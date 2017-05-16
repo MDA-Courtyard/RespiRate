@@ -14,6 +14,8 @@ simultaneously so you don't end up with redundant/conflicting code.
 def errorNotif(self, msg):
     '''Display an error or warning message.'''
     # Used in RespiRate and MouseFunctions
+    if self == 'noself':
+        self = QWidget()
     QMessageBox.warning(self, 'Error', '\n'+msg+'\n')
 
 #
