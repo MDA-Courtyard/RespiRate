@@ -36,6 +36,7 @@ def askQuestion(self, title, msg):
     ask = QMessageBox(self)
     ask.setWindowTitle(title)
     ask.setText(msg)
+    ask.setIcon(QMessageBox.Question)
     ask.setDefaultButton(QMessageBox.Yes)
     ask.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
     ask.setWindowModality(0)

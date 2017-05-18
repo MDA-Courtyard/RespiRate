@@ -148,7 +148,7 @@ class Gui(QtWidgets.QMainWindow):
                 self.captureNextFrame()
 
         except ZeroDivisionError:
-            errorNotif(self, 'Not a recognized video format.')
+            errorNotif(self, '<br>Not a recognized video format.</br>')
             self.filename = 0
 
     def openOutput(self):
@@ -541,10 +541,10 @@ class Gui(QtWidgets.QMainWindow):
 
             # Measurement terminated before full run time
             if endTime != self.endTimemsec:
-                errorNotif(self, 'Measurement did not run for entire set length.')
+                errorNotif(self, '<br>Measurement did not run for entire set length.>/br>')
 
             # Ask if we want to export data to a spreadsheet
-            export = askQuestion(self, 'RespiRate', 'Export data to spreadsheet?')
+            export = askQuestion(self, 'RespiRate', '<br>Export data to spreadsheet?</br>')
             print('export', export) #Debugging
             if export == 'yes':
                 for numba in range(0, self.numberOfMice):
@@ -560,8 +560,8 @@ class Gui(QtWidgets.QMainWindow):
                     mf.xOutput(toPrintList, workBook, sheetName)
 
         except ZeroDivisionError or IndexError:
-            msg = ('The selected region on '+ str(mouseNumList[numba])+
-                ' is not suitable for respiration measurements')
+            msg = ('<br>The selected region on '+ str(mouseNumList[numba])+
+                ' is not suitable for respiration measurements.</br>')
             errorNotif(self, msg)
 
         # Close the secondary windows.
@@ -570,9 +570,9 @@ class Gui(QtWidgets.QMainWindow):
 
     def errorCheck(self, tsec):
         '''Check for common mistakes and return a notification.'''
-        msg_video = 'You have not selected a video!'
-        msg_time = 'Time must be in hh:mm:ss format.'
-        msg_len = 'The given length of measurement cannot be understood.'
+        msg_video = '<br>You have not selected a video!</br>'
+        msg_time = '<br>Time must be in hh:mm:ss format</br>.'
+        msg_len = '<br>The given length of measurement cannot be understood.</br>'
         tsec = str(tsec)
         time_check = tsec.split(':')
         len_measure = str(self.lenOFMeas)
