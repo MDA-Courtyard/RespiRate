@@ -543,7 +543,7 @@ class Gui(QtWidgets.QMainWindow):
 
             # Measurement terminated before full run time
             if endTime != self.endTimemsec:
-                errorNotif(self, '<br>Measurement did not run for entire set length.>/br>')
+                errorNotif(self, '<br>Measurement did not run for entire set length.</br>')
 
             # Ask if we want to export data to a spreadsheet
             export = askQuestion(self, 'RespiRate', '<br>Export data to spreadsheet?</br>')
