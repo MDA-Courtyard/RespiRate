@@ -544,8 +544,8 @@ class Gui(QtWidgets.QMainWindow):
                 errorNotif(self, 'Measurement did not run for entire set length.')
 
             # Ask if we want to export data to a spreadsheet
-            export = askQuestion('RespiRate', 'Export data to spreadsheet?')
-            print('export', export)
+            export = askQuestion(self, 'RespiRate', 'Export data to spreadsheet?')
+            print('export', export) #Debugging
             if export == 'yes':
                 for numba in range(0, self.numberOfMice):
                     # videoNum = re.search('Video (.*)\.', self.filename).group(1)
