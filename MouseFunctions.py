@@ -38,7 +38,7 @@ def xOutput(toPrintList, workBook, sheetName):
             if path.isfile(file_path) == False:
                 q = ('<br>A suitable spreadsheet was not found.</br>'
                 '<br>Would you like to generate one automatically?</br>')
-                new = notifiCat.askQuestion(self, 'No spreadsheet.', q)
+                new = notifiCat.askQuestion('noself', 'No spreadsheet.', q)
                 if new == 'yes':
                     # Test if the folder exists. It might even if the file does not.
                     if not path.exists(dir_path):
