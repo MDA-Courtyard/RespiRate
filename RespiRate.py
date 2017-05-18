@@ -9,6 +9,7 @@ import re
 from platform import platform, system
 from subprocess import call
 import sys
+from traceback import print_exc
 import cv2
 import numpy as np
 from PyQt5 import QtWidgets, QtCore, QtGui
@@ -305,125 +306,126 @@ class Gui(QtWidgets.QMainWindow):
         respRates = []
         bRespRates = []
         minstdevs = []
-        # Get a unique mouse ID for each mouse.
-        for numba in range(0, self.numberOfMice):
-            vid = mv.frameReader(self.filename)
-            img = vid.getFrame(self.firstframe)
-            conty = mv.contour(img)
+        try:
+            # Get a unique mouse ID for each mouse.
+            for numba in range(0, self.numberOfMice):
+                vid = mv.frameReader(self.filename)
+                img = vid.getFrame(self.firstframe)
+                conty = mv.contour(img)
 
-            def WhichMouse(entry=None):
-                global mouseNum
-                mouseNum = e1.get()
-                master.destroy()
+                def WhichMouse(entry=None):
+                    global mouseNum
+                    mouseNum = e1.get()
+                    master.destroy()
 
-            master = Tk()
-            master.title('Please enter the mouse ID')
-            master.minsize(325,25)
-            Label(master, text='Mouse #').grid(row=0)
-            e1 = Entry(master)
-            e1.grid(row=0, column=1)
-            e1.focus_force()
-            button = Button(master, text='OK', command=WhichMouse)
-            button.grid(row=0, column=3, sticky='W', pady=4)
-            master.bind ('<Return>', WhichMouse)
-            mainloop()
-            mouseNumList.append(mouseNum)
-            inconty = mv.insideContour(conty, img)
-            incontours.append(inconty)
+                master = Tk()
+                master.title('Please enter the mouse ID')
+                master.minsize(325,25)
+                Label(master, text='Mouse #').grid(row=0)
+                e1 = Entry(master)
+                e1.grid(row=0, column=1)
+                e1.focus_force()
+                button = Button(master, text='OK', command=WhichMouse)
+                button.grid(row=0, column=3, sticky='W', pady=4)
+                master.bind ('<Return>', WhichMouse)
+                mainloop()
+                mouseNumList.append(mouseNum)
+                inconty = mv.insideContour(conty, img)
+                incontours.append(inconty)
 
-        self.cont = 2
-        # Parameters for Shi-Tomasi corner detection
-        feature_params = dict( maxCorners = 10,
-                          qualityLevel = 0.3,
-                          minDistance = 7,
-                          blockSize = 7)
-        # Parameters for Lucas-Kanade optical flow
-        lk_params = dict( winSize  = (15, 15),
-                      maxLevel = 2,
-                      criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
+            self.cont = 2
+            # Parameters for Shi-Tomasi corner detection
+            feature_params = dict( maxCorners = 10,
+                              qualityLevel = 0.3,
+                              minDistance = 7,
+                              blockSize = 7)
+            # Parameters for Lucas-Kanade optical flow
+            lk_params = dict( winSize  = (15, 15),
+                          maxLevel = 2,
+                          criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
 
-        # Create some random colors
-        color = np.random.randint(0, 255, (100, 3))
-        self.capture.set(1, self.firstframe)
+            # Create some random colors
+            color = np.random.randint(0, 255, (100, 3))
+            self.capture.set(1, self.firstframe)
 
-        # Take first frame and find corners in it
-        ret, old_frame = self.capture.read()
-        old_gray = cv2.cvtColor(old_frame, cv2.COLOR_BGR2GRAY)
-        p0s = mf.ListOfLists(self.numberOfMice)
-        for numba in range(0, self.numberOfMice):
-            p0s[numba] = cv2.goodFeaturesToTrack(old_gray, mask = incontours[numba], **feature_params)
+            # Take first frame and find corners in it
+            ret, old_frame = self.capture.read()
+            old_gray = cv2.cvtColor(old_frame, cv2.COLOR_BGR2GRAY)
+            p0s = mf.ListOfLists(self.numberOfMice)
+            for numba in range(0, self.numberOfMice):
+                p0s[numba] = cv2.goodFeaturesToTrack(old_gray, mask = incontours[numba], **feature_params)
 
-        # Create a mask image for drawing purposes
-        mask = np.zeros_like(old_frame)
-        xPoints = mf.ListOfLists(self.numberOfMice)
-        yPoints = mf.ListOfLists(self.numberOfMice)
-        p1s = mf.ListOfLists(self.numberOfMice)
-        sts = mf.ListOfLists(self.numberOfMice)
-        errs = mf.ListOfLists(self.numberOfMice)
-        good_news = mf.ListOfLists(self.numberOfMice)
-        good_olds = mf.ListOfLists(self.numberOfMice)
-        dists = mf.ListOfLists(self.numberOfMice)
-        pointPos = mf.ListOfLists(self.numberOfMice)
-        peakPos = mf.ListOfLists(self.numberOfMice)
+            # Create a mask image for drawing purposes
+            mask = np.zeros_like(old_frame)
+            xPoints = mf.ListOfLists(self.numberOfMice)
+            yPoints = mf.ListOfLists(self.numberOfMice)
+            p1s = mf.ListOfLists(self.numberOfMice)
+            sts = mf.ListOfLists(self.numberOfMice)
+            errs = mf.ListOfLists(self.numberOfMice)
+            good_news = mf.ListOfLists(self.numberOfMice)
+            good_olds = mf.ListOfLists(self.numberOfMice)
+            dists = mf.ListOfLists(self.numberOfMice)
+            pointPos = mf.ListOfLists(self.numberOfMice)
+            peakPos = mf.ListOfLists(self.numberOfMice)
 
-        for numba in range(0, self.numberOfMice):
-            for i in range(len(p0s[numba])):
-                xPoints[numba].append([])
-                yPoints[numba].append([])
+            for numba in range(0, self.numberOfMice):
+                for i in range(len(p0s[numba])):
+                    xPoints[numba].append([])
+                    yPoints[numba].append([])
 
-        l=0
+            l=0
 
-        for num in range(np.int(self.firstframe), np.int(self.lastframe + 1)):
-            ret,frame = self.capture.read()
-            frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            stzeros = []
-            for numba in range(0,self.numberOfMice):
-                stzeros.append(np.array([]))
-            for numba in range(0,self.numberOfMice):
-                # Calculate optical flow
-                p1s[numba], sts[numba], errs[numba] = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, p0s[numba], None, **lk_params)
-                # Select good points
+            for num in range(np.int(self.firstframe), np.int(self.lastframe + 1)):
+                ret,frame = self.capture.read()
+                frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                stzeros = []
+                for numba in range(0,self.numberOfMice):
+                    stzeros.append(np.array([]))
+                for numba in range(0,self.numberOfMice):
+                    # Calculate optical flow
+                    p1s[numba], sts[numba], errs[numba] = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, p0s[numba], None, **lk_params)
+                    # Select good points
+                    if np.any(sts[numba]) == 0:
+                        break
+                    good_news[numba] = p1s[numba][sts[numba] == 1]
+                    good_olds[numba] = p0s[numba][sts[numba] == 1]
+                    if (len(p0s[numba]) != len(good_olds[numba])):
+                        stzeros[numba] = np.where(sts[numba] == 0)[0]
+                        for j in stzeros[numba][::-1]:
+                            for i in range(len(p0s[numba])):
+                                if i == j:
+                                    del xPoints[numba][i]
+                                    del yPoints[numba][i]
+
+                    # Draw the tracks
+                    for i,(new,old) in enumerate(list(zip(good_news[numba],good_olds[numba]))):
+                        a,b = new.ravel()
+                        c,d = old.ravel()
+                        xPoints[numba][i].append([])
+                        yPoints[numba][i].append([])
+                        xPoints[numba][i][l].append(c)
+                        yPoints[numba][i][l].append(d)
+                        mask = cv2.line(mask, (a,b),(c,d), color[i].tolist(), 2)
+                        frame = cv2.circle(frame,(a,b),5,color[i].tolist(),-1)
+                    p0s[numba] = good_news[numba].reshape(-1,1,2) # Update the previous points
                 if np.any(sts[numba]) == 0:
-                    break
-                good_news[numba] = p1s[numba][sts[numba] == 1]
-                good_olds[numba] = p0s[numba][sts[numba] == 1]
-                if (len(p0s[numba]) != len(good_olds[numba])):
-                    stzeros[numba] = np.where(sts[numba] == 0)[0]
-                    for j in stzeros[numba][::-1]:
-                        for i in range(len(p0s[numba])):
-                            if i == j:
-                                del xPoints[numba][i]
-                                del yPoints[numba][i]
-
-                # Draw the tracks
-                for i,(new,old) in enumerate(list(zip(good_news[numba],good_olds[numba]))):
-                    a,b = new.ravel()
-                    c,d = old.ravel()
-                    xPoints[numba][i].append([])
-                    yPoints[numba][i].append([])
-                    xPoints[numba][i][l].append(c)
-                    yPoints[numba][i][l].append(d)
-                    mask = cv2.line(mask, (a,b),(c,d), color[i].tolist(), 2)
-                    frame = cv2.circle(frame,(a,b),5,color[i].tolist(),-1)
-                p0s[numba] = good_news[numba].reshape(-1,1,2) # Update the previous points
-            if np.any(sts[numba]) == 0:
+                        endTime = self.capture.get(0)
+                        break
+                img = cv2.add(frame, mask)
+                cv2.imshow('flow', img)
+                k = cv2.waitKey(30) & 0xff
+                if k == 27:
                     endTime = self.capture.get(0)
                     break
-            img = cv2.add(frame, mask)
-            cv2.imshow('flow', img)
-            k = cv2.waitKey(30) & 0xff
-            if k == 27:
-                endTime = self.capture.get(0)
-                break
 
-            # Now update the previous frame
-            old_gray = frame_gray.copy()
-            l = l + 1
+                # Now update the previous frame
+                old_gray = frame_gray.copy()
+                l = l + 1
 
-        # If the measurement field on the mouse is out of focus or the mouse
-        # moves too much, the program crashes with a division by zero error
-        # starting at avgs[i].append(sum(distBTpeaksxt[i]) / len(distBTpeaksxt[i]))
-        try:
+            # If the measurement field on the mouse is out of focus or the mouse
+            # moves too much, the program crashes with a division by zero error
+            # starting at avgs[i].append(sum(distBTpeaksxt[i]) / len(distBTpeaksxt[i]))
+        # try:
             for numba in range(0, self.numberOfMice):
                 pointx = mf.ListOfLists(len(p0s[numba]))
                 pointy = mf.ListOfLists(len(p0s[numba]))
@@ -559,7 +561,10 @@ class Gui(QtWidgets.QMainWindow):
                     sheetName = 'Sheet1'
                     mf.xOutput(toPrintList, workBook, sheetName)
 
-        except ZeroDivisionError or IndexError:
+        # except ZeroDivisionError or IndexError:
+        except (TypeError, ZeroDivisionError, IndexError) as excpt:
+            print('type is: ', excpt.__class__.__name__)
+            print_exc()
             msg = ('<br>The selected region on '+ str(mouseNumList[numba])+
                 ' is not suitable for respiration measurements.</br>')
             errorNotif(self, msg)
