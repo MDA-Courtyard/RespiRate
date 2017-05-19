@@ -1,3 +1,6 @@
+## 0.0.3 (development)
+ * Don't restart video when current frame is also the last frame
+
 ## 0.0.2 (05.18.2017)
  * Show hyperlinks in dialog windows instead of plain text
  * Move all functions in notifiCat from Tkinter to Qt
