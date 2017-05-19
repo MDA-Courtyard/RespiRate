@@ -26,7 +26,7 @@ def find(stdevs, minstvar):
             continue
         yield i, j
 
-def xOutput(toPrintList, workBook, sheetName):
+def xOutput(self, toPrintList, workBook, sheetName):
     '''Export data to spreadsheet for easy review and analysis.'''
     if workBook == 0 and sheetName == 0:
         errorNotif('<br>Data was not saved to spreadsheet!</br>')
@@ -36,9 +36,9 @@ def xOutput(toPrintList, workBook, sheetName):
             dir_path = path.join(path.expanduser('~'), 'RespiRate')
             file_path = path.join(dir_path, workBook)
             if path.isfile(file_path) == False:
-                q = ('<br>A suitable spreadsheet was not found.</br>'
-                '<br>Would you like to generate one automatically?</br>')
-                new = notifiCat.askQuestion('noself', 'No spreadsheet.', q)
+                q = ('<p>A suitable spreadsheet was not found.'
+                '<br>Would you like to generate one automatically?</br></p>')
+                new = notifiCat.askQuestion(self, 'No spreadsheet.', q)
                 if new == 'yes':
                     # Test if the folder exists. It might even if the file does not.
                     if not path.exists(dir_path):
@@ -63,7 +63,7 @@ def xOutput(toPrintList, workBook, sheetName):
                     book.save(file_path)
                     created_msg = ('Spreadsheet was created as `output1.xls` in'
                             ' the RespiRate folder.')
-                    notifiCat.infoNotif('noself', 'Success!', created_msg)
+                    notifiCat.infoNotif(self, 'Success!', created_msg)
                 else:
                     return
             # The file exists (or was just created) - now write output.
@@ -89,5 +89,5 @@ def xOutput(toPrintList, workBook, sheetName):
             # If we get this far, the spreadsheet cannot be opened (most likely
             # it is already opened in Excel or another program). Check it, close
             # it, and rerun it. Working now?
-            notifiCat.errorNotif('noself','Data cannot be exported!\n'
+            notifiCat.errorNotif(self,'Data cannot be exported!\n'
                     '<br>Please check if the spreadsheet is already opened.</br>')

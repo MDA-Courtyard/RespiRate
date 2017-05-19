@@ -559,7 +559,7 @@ class Gui(QtWidgets.QMainWindow):
                         str(round(minstdevs[numba], 4))]
                     workBook = 'output1.xls'
                     sheetName = 'Sheet1'
-                    mf.xOutput(toPrintList, workBook, sheetName)
+                    mf.xOutput(self, toPrintList, workBook, sheetName)
 
         # except ZeroDivisionError or IndexError:
         except (TypeError, ZeroDivisionError, IndexError) as excpt:
