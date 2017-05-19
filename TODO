@@ -1,6 +1,9 @@
 TODO:
 ===============================================================================
+Detect if an existing graph for the same mouse exists from a previous run, and
+overwrite as needed.
 
+Add video tutorial(s).
 
 LONG TERM:
 ===============================================================================
