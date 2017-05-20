@@ -4,8 +4,6 @@ Add video tutorial(s).
 
 LONG TERM:
 ===============================================================================
-Move everything to Qt
-
 If the spreadsheet is opened, allow the user to close it and then
 export data, rather than having to rerun
 
@@ -69,3 +67,5 @@ DONE: Add sample video to GitHub repo
 
 DONE: Detect if an existing graph for the same mouse exists from a previous run,
 and overwrite as needed.
+
+DONE: Move everything to Qt
