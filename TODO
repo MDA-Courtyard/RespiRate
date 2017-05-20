@@ -1,8 +1,5 @@
 TODO:
 ===============================================================================
-Detect if an existing graph for the same mouse exists from a previous run, and
-overwrite as needed.
-
 Add video tutorial(s).
 
 LONG TERM:
@@ -69,3 +66,6 @@ DONE: non-strict video names
 DONE: allow user to check for a new release
 
 DONE: Add sample video to GitHub repo
+
+DONE: Detect if an existing graph for the same mouse exists from a previous run,
+and overwrite as needed.
