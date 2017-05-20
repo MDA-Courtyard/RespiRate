@@ -28,11 +28,11 @@ instructions expect Python 3.6 (Anaconda is recommended).
  computers, download opencv_python‑3.2.0‑cp36‑cp36m‑win_amd64.whl. For 32-bit,
  download opencv_python‑3.2.0‑cp36‑cp36m‑win32.whl.
  Navigate to your downloaded file, hold Shift and right-click, and choose "Open
- a command window here."
- For 64-bit computers, use
- `pip install .\opencv_python-3.2.0-cp36-cp36m-win_amd64.whl`
- For 32-bit computers, use
- 'pip install .\opencv_python‑3.2.0‑cp36‑cp36m‑win32.whl'
+ a command window here."  
+ For 64-bit computers, use  
+ `pip install .\opencv_python-3.2.0-cp36-cp36m-win_amd64.whl`  
+ For 32-bit computers, use  
+ `pip install .\opencv_python‑3.2.0‑cp36‑cp36m‑win32.whl`  
 
  - This program's source code. If you're reading this, you probably already have
  it.
