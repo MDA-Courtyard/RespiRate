@@ -422,10 +422,6 @@ class Gui(QtWidgets.QMainWindow):
                 old_gray = frame_gray.copy()
                 l = l + 1
 
-            # If the measurement field on the mouse is out of focus or the mouse
-            # moves too much, the program crashes with a division by zero error
-            # starting at avgs[i].append(sum(distBTpeaksxt[i]) / len(distBTpeaksxt[i]))
-        # try:
             for numba in range(0, self.numberOfMice):
                 pointx = mf.ListOfLists(len(p0s[numba]))
                 pointy = mf.ListOfLists(len(p0s[numba]))
@@ -566,7 +562,9 @@ class Gui(QtWidgets.QMainWindow):
                     sheetName = 'Sheet1'
                     mf.xOutput(self, toPrintList, workBook, sheetName)
 
-        # except ZeroDivisionError or IndexError:
+        # If the measurement field on the mouse is out of focus or the mouse
+        # moves too much and all trackers are dropped, we get various errors.
+        # See TODO for more info
         except (TypeError, ZeroDivisionError, IndexError) as excpt:
             print('type is: ', excpt.__class__.__name__)
             print_exc()
