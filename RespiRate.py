@@ -215,17 +215,7 @@ class Gui(QtWidgets.QMainWindow):
         self.timeInSec = timecv / 1000
         self.displayTime = QtCore.QTime((timecv / 3600000) % 60, (timecv / 60000) % 60, (timecv / 1000) % 60)
         self.ui.lcdNumber.display(self.displayTime.toString('hh:mm:ss'))
-        # TEST
         self.slide.setSliderPosition(self.timeInSec)
-        # self.moveSlide()
-
-
-    # def moveSlide(self):
-    #     '''Keep the main window slide moving.'''
-    #     timecv = self.capture.get(0)
-    #     self.timeInSec = timecv / 1000
-    #     self.slide.setSliderPosition(self.timeInSec)
-
 
     def pausePressed(self):
         '''Pause the video in the main window.'''
@@ -373,7 +363,7 @@ class Gui(QtWidgets.QMainWindow):
                     xPoints[numba].append([])
                     yPoints[numba].append([])
 
-            l=0
+            l = 0
 
             for num in range(np.int(self.firstframe), np.int(self.lastframe + 1)):
                 ret,frame = self.capture.read()
