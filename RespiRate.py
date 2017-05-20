@@ -501,11 +501,10 @@ class Gui(QtWidgets.QMainWindow):
                 xaxisYtopT = [x / 30 for x in xaxisYtop]
                 xaxisYbottomT = [x / 30 for x in xaxisYbottom]
 
+                # Close open figures with same name to prevent bad formatting
                 if plt.fignum_exists('Mouse %s' % mouseNumList[numba]):
-                    print('yes')
                     plt.close('Mouse %s' % mouseNumList[numba])
-                else:
-                    print('no')
+
                 plt.ion() # cosmetic, QCoreApplication error without this
                 plt.figure('Mouse %s' % mouseNumList[numba]) # Window name
                 plt.plot(xaxisT, pointy[numba], color='#3399FF') # Curve
