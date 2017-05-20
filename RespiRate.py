@@ -20,7 +20,6 @@ import MouseFunctions as mf
 import peakdetect as pd
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
-from tkinter import Tk, Label, Entry, Button, mainloop
 from notifiCat import errorNotif, askQuestion, infoNotif
 
 class Gui(QtWidgets.QMainWindow):
@@ -110,7 +109,7 @@ class Gui(QtWidgets.QMainWindow):
                 '<br>Licensed under the MIT license.</br></p>'
                 '<p>This program uses opencv_ffmpeg320 libraries, released'
                 '<br>and copyrighted 2001 under the LGPL by Fabrice Bellard,</br>'
-                '<br>and the PyQt5 and Tkinter graphical toolkits.</br></p>'
+                '<br>and the PyQt5 collection of graphical toolkits.</br></p>'
                 '<p><a href="https://github.com/MDA-Courtyard/RespiRate">Home Page</a>'
                 '<br><a href="https://github.com/MDA-Courtyard/RespiRate/issues">Help</a></br>'
                 '<br><a href="https://github.com/MDA-Courtyard/RespiRate/blob/master/COPYING.md">Contributors and License</a></br></p>')
@@ -290,12 +289,12 @@ class Gui(QtWidgets.QMainWindow):
         self.captureNextFrame()
         self._timer.start()
 
-
         incontours = []
         mouseNumList = []
         respRates = []
         bRespRates = []
         minstdevs = []
+
         try:
             # Get a unique mouse ID for each mouse.
             for numba in range(0, self.numberOfMice):
@@ -303,25 +302,17 @@ class Gui(QtWidgets.QMainWindow):
                 img = vid.getFrame(self.firstframe)
                 conty = mv.contour(img)
 
-                def WhichMouse(entry=None):
-                    global mouseNum
-                    mouseNum = e1.get()
-                    master.destroy()
-
-                master = Tk()
-                master.title('Please enter the mouse ID')
-                master.minsize(325,25)
-                Label(master, text='Mouse #').grid(row=0)
-                e1 = Entry(master)
-                e1.grid(row=0, column=1)
-                e1.focus_force()
-                button = Button(master, text='OK', command=WhichMouse)
-                button.grid(row=0, column=3, sticky='W', pady=4)
-                master.bind ('<Return>', WhichMouse)
-                mainloop()
-                mouseNumList.append(mouseNum)
-                inconty = mv.insideContour(conty, img)
-                incontours.append(inconty)
+                mouseNum, ok = QtWidgets.QInputDialog.getText(self, 'Mouse ID',
+                    'Please enter the Mouse #')
+                print(ok)
+                print(mouseNum)
+                if ok and mouseNum:
+                    print(mouseNum)
+                    mouseNumList.append(mouseNum)
+                    inconty = mv.insideContour(conty, img)
+                    incontours.append(inconty)
+                else:
+                    return
 
             self.cont = 2
             # Parameters for Shi-Tomasi corner detection
