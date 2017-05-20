@@ -1,5 +1,6 @@
 ## 0.0.3 (development)
  * Don't restart video when current frame is also the last frame
+ * Overwrite existing graph(s) instead of appending - prevents formatting errors
 
 ## 0.0.2 (05.18.2017)
  * Show hyperlinks in dialog windows instead of plain text
