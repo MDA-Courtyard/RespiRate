@@ -67,7 +67,6 @@ def xOutput(self, toPrintList, workBook, sheetName):
                 else:
                     return
             # The file exists (or was just created) - now write output.
-            open(file_path, 'r+')
             wb = xlrd.open_workbook(file_path)   #output1.xls
             sheet = wb.sheet_by_name(sheetName)   #Sheet1
             rb = copy(wb)
