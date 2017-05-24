@@ -26,7 +26,8 @@ Use RespiRate_x64.exe for Windows 64-bit, and RespiRate_x32.exe for Windows
 
 You can also download a sample video from [here](https://raw.githubusercontent.com/MDA-Courtyard/RespiRate/master/sample.mp4).  
 Some browsers may not automatically download the video. In that case,
-right-click and choose "Save Video As..." (wording may differ).
+right-click and choose "Save Video As..." (wording may vary depending on your
+browser).
 <br><br><br><br>
 ## Using RespiRate
 ![](data/mainwin.png)  

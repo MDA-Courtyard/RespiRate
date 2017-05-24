@@ -8,12 +8,10 @@ Additionally, we use portions of code published by the following authors:
  - Sixten Bergman  
     peakdetect.py
 
-We use PyQt5 and Tkinter toolkits to provide our graphical interfaces, and
-OpenCv for the video analysis:
+We use PyQt5 to provide our graphical interfaces, and OpenCv for the video
+analysis:
  - PyQt  
     https://sourceforge.net/projects/pyqt
- - Tkinter  
-    http://tkinter.unpythonic.net
  - OpenCv  
     http://opencv.org/
 
