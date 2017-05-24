@@ -29,7 +29,7 @@ def find(stdevs, minstvar):
 def xOutput(self, toPrintList, workBook, sheetName):
     '''Export data to spreadsheet for easy review and analysis.'''
     if workBook == 0 and sheetName == 0:
-        errorNotif('<br>Data was not saved to spreadsheet!</br>')
+        notifiCat.errorNotif('<br>Data was not saved to spreadsheet!</br>')
     else:
         try:
             # Check if the target file already exists.
