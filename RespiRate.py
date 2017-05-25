@@ -312,6 +312,7 @@ class Gui(QtWidgets.QMainWindow):
                     inconty = mv.insideContour(conty, img)
                     incontours.append(inconty)
                 else:
+                    cv2.destroyWindow('Click the outline of your ROI:')
                     return
 
             self.cont = 2
