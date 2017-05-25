@@ -6,6 +6,8 @@
     providing the mouse ID, instead of requiring the user to close it.
  * Fix condition where an image file is loaded and not rejected like other
     non-video files
+ * Call system commands through QProcess instead of subprocess - keeps main
+    window from freezing while commands are executed
 
 ## 0.0.2 (05.18.2017)
  * Show hyperlinks in dialog windows instead of plain text

@@ -7,7 +7,6 @@ import itertools
 from os import path
 import re
 from platform import platform, system
-from subprocess import call
 import sys
 from traceback import print_exc
 import cv2
@@ -46,6 +45,7 @@ class Gui(QtWidgets.QMainWindow):
         self.ui.lineEdit_lenMeasure.textChanged.connect(self.enableButton3)
         self.ui.pushButton_Contour.setEnabled(False)
         self.ui.textBrowser_Output.setReadOnly(True)
+        self._process = QtCore.QProcess(self)
         self.cont = 0
         self.enableCount = 0
         self.enableCount2 = 0
@@ -160,11 +160,11 @@ class Gui(QtWidgets.QMainWindow):
         if not ssheet == '':
             print('Opening %r' % ssheet)
             if system() == 'Windows':
-                call(['start', ssheet], shell=True)
+                self._process.start('cmd.exe', ['/c', 'start', ssheet])
             elif system() == 'Darwin':
-                call(['open', ssheet], shell=True)
+                self._process.start('open', [ssheet])
             elif system() =='Linux':
-                call(['xdg-open', ssheet])
+                self._process.start('xdg-open', [ssheet])
 
 
     def captureNextFrame(self):
