@@ -1,6 +1,11 @@
 ## 0.0.3 (development)
  * Don't restart video when current frame is also the last (useable) frame.
  * Overwrite existing graph(s) instead of appending - prevents formatting errors
+ * All user input windows are provided by Qt5.
+ * Automatically close contour window when user clicks 'Cancel' instead of
+    providing the mouse ID, instead of requiring the user to close it.
+ * Fix condition where an image file is loaded and not rejected like other
+    non-video files
 
 ## 0.0.2 (05.18.2017)
  * Show hyperlinks in dialog windows instead of plain text
