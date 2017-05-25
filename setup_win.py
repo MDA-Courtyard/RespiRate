@@ -10,7 +10,6 @@ import subprocess
 import shutil
 import platform
 
-pyinst_path = input('Path to pyinstaller: ')
 pwd = os.getcwd()
 
 # Remove old build directories
@@ -21,7 +20,7 @@ if os.path.exists('build') == True:
 if os.path.exists('dist') == True:
     shutil.rmtree('dist', ignore_errors=True)
 
-subprocess.call(['python', pyinst_path+'pyinstaller.py', '--noconsole', '--clean', '--icon=RespiRate.ico', 'RespiRate.py'])
+subprocess.call(['pyinstaller', '--noconsole', '--clean', '--icon=RespiRate.ico', 'RespiRate.py'])
 
 # Copy the icon
 shutil.copyfile('RespiRate.ico', pwd+'\dist\RespiRate\RespiRate.ico')
