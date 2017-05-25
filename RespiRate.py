@@ -145,7 +145,8 @@ class Gui(QtWidgets.QMainWindow):
                 self.ui.lcdNumber.display('00:00:00')
                 self.slide.setSliderPosition(0)
                 self.cont = 0
-                self.captureNextFrame()
+                capture = self.captureNextFrame()
+                print(capture)
 
         except ZeroDivisionError:
             errorNotif(self, '<br>Not a recognized video format.</br>')
@@ -168,40 +169,48 @@ class Gui(QtWidgets.QMainWindow):
 
     def captureNextFrame(self):
         '''capture frame and reverse RGB BGR and return opencv image'''
-        if self.cont == 0:
-            ret, readFrame = self.capture.read()
-            self.currentFrame = cv2.cvtColor(readFrame, cv2.COLOR_BGR2RGB)
-            height,width = self.currentFrame.shape[:2]
-            self.img = QtGui.QImage(self.currentFrame,
-                              width,
-                              height,
-                              QtGui.QImage.Format_RGB888)
-            self.img = QtGui.QPixmap(self.img)
-            self.ui.videoFrame.setPixmap(self.img.scaled(self.ui.videoFrame.size(), QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
-            if self.capture.get(0) > self.endTimemsec:
-                self.capture.set(0, self.startTimemsec)
-            self._timer.timeout.connect(self.tick)
-            self._timer.start()
+        # Some file types, like .ico files, make it through the try-except in
+        # self.openNew since OpenCV can read them. This should catch them.
+        try:
+            if self.cont == 0:
+                ret, readFrame = self.capture.read()
+                self.currentFrame = cv2.cvtColor(readFrame, cv2.COLOR_BGR2RGB)
+                height,width = self.currentFrame.shape[:2]
+                self.img = QtGui.QImage(self.currentFrame,
+                                  width,
+                                  height,
+                                  QtGui.QImage.Format_RGB888)
+                self.img = QtGui.QPixmap(self.img)
+                self.ui.videoFrame.setPixmap(self.img.scaled(self.ui.videoFrame.size(), QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
+                if self.capture.get(0) > self.endTimemsec:
+                    self.capture.set(0, self.startTimemsec)
+                self._timer.timeout.connect(self.tick)
+                self._timer.start()
 
-        elif self.cont == 1:
-            ret, readFrame = self.capture.read()
-            self.currentFrame = cv2.cvtColor(readFrame,cv2.COLOR_BGR2RGB)
-            height,width = self.currentFrame.shape[:2]
-            self.img = QtGui.QImage(self.currentFrame,
-                              width,
-                              height,
-                              QtGui.QImage.Format_RGB888)
-            self.img = QtGui.QPixmap(self.img)
-            self.ui.videoFrame.setPixmap(self.img.scaled(self.ui.videoFrame.size(),
-                QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
-            if self.capture.get(0) >= self.endTimemsec:
-                self.capture.set(0, self.startTimemsec)
-            self._timer.timeout.connect(self.tick)
-            self._timer.start()
+            elif self.cont == 1:
+                ret, readFrame = self.capture.read()
+                self.currentFrame = cv2.cvtColor(readFrame,cv2.COLOR_BGR2RGB)
+                height,width = self.currentFrame.shape[:2]
+                self.img = QtGui.QImage(self.currentFrame,
+                                  width,
+                                  height,
+                                  QtGui.QImage.Format_RGB888)
+                self.img = QtGui.QPixmap(self.img)
+                self.ui.videoFrame.setPixmap(self.img.scaled(self.ui.videoFrame.size(),
+                    QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
+                if self.capture.get(0) >= self.endTimemsec:
+                    self.capture.set(0, self.startTimemsec)
+                self._timer.timeout.connect(self.tick)
+                self._timer.start()
 
-        elif self.cont == 2:
+            elif self.cont == 2:
+                self._timer.stop()
+
+        except cv2.error:
+            self.capture.release()
             self._timer.stop()
-
+            errorNotif(self, '<br>Not a recognized video format.</br>')
+            return
 
     def slider_value_change(self, value):
         '''If the slide is moved manually, skip the video to the corresponding time.'''
