@@ -67,7 +67,7 @@ class Gui(QtWidgets.QMainWindow):
         self.lastframe = 0
         self.length = 0
         self.numberOfMice = 0
-        self.version = '0.0.3~development'
+        self.version = '0.0.3'
         self._timer = QtCore.QTimer(self)
         if self.cont == 0:
             self._timer.timeout.connect(self.captureNextFrame)

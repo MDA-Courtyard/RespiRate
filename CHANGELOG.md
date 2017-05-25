@@ -1,4 +1,4 @@
-## 0.0.3 (development)
+## 0.0.3 (05.25.2017)
  * Don't restart video when current frame is also the last (useable) frame.
  * Overwrite existing graph(s) instead of appending - prevents formatting errors
  * All user input windows are provided by Qt5.
