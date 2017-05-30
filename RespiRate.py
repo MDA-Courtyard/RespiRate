@@ -162,6 +162,7 @@ class Gui(QtWidgets.QMainWindow):
             # Don't even try if user pressed 'Cancel' in file dialog
             if not self.filename == '':
                 print(self.filename+'\n')
+                self.vid_dir = path.dirname(path.realpath(self.filename))
                 self.writeConfig()
                 self.capture = cv2.VideoCapture(self.filename)
                 self.capture.open(self.filename)
@@ -268,8 +269,7 @@ class Gui(QtWidgets.QMainWindow):
         '''Write data to config file for future runs.'''
         with open(self.config, 'w') as conf:
             try:
-                dir = path.dirname(path.realpath(self.filename))
-                conf.writelines(dir)
+                conf.writelines(self.vid_dir)
 
             except TypeError as excpt:
                 # Return exception to terminal if run as script, but otherwise
