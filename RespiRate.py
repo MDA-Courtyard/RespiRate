@@ -4,7 +4,7 @@
 # Licensed under the MIT license. See COPYING.md for details.
 import ctypes
 import itertools
-from os import path
+from os import getcwd, makedirs, path
 import re
 from platform import platform, system
 import sys
@@ -46,6 +46,11 @@ class Gui(QtWidgets.QMainWindow):
         self.ui.pushButton_Contour.setEnabled(False)
         self.ui.textBrowser_Output.setReadOnly(True)
         self._process = QtCore.QProcess(self)
+        # Set up a config file
+        makedirs(path.join(path.expanduser('~'), '.RespiRate'), exist_ok=True)
+        self.dir = path.abspath(path.join(path.expanduser('~'), '.RespiRate'))
+        self.config = path.abspath(path.join(self.dir, 'RRconf.txt'))
+
         self.cont = 0
         self.enableCount = 0
         self.enableCount2 = 0
@@ -67,13 +72,37 @@ class Gui(QtWidgets.QMainWindow):
         self.lastframe = 0
         self.length = 0
         self.numberOfMice = 0
-        self.version = '0.0.3'
+        self.vid_dir = getcwd()
+        self.version = '0.0.4~development'
         self._timer = QtCore.QTimer(self)
         if self.cont == 0:
             self._timer.timeout.connect(self.captureNextFrame)
         else:
             self._timer.timeout.connect(self.opticalFlowTrack)
+        self.load_config()
         self.update()
+
+
+    def load_config(self):
+        '''Open and read the config file.'''
+        # If the file does not exist (first run)
+        if path.isfile(self.config) == False:
+            with open(self.config, 'w+') as f:
+                f.close()
+
+        # The file does exist - get the location of the last loaded video.
+        elif path.isfile(self.config) == True:
+            with open(self.config, 'r+') as f:
+                # We need try/except in case the config file is empty for some
+                # reason
+                try:
+                    data = f.read().splitlines()
+                    self.vid_dir = data[0]
+                except IndexError  as excpt:
+                    # Return exception to terminal if run as script, but
+                    # otherwise don't bother user.
+                    print('type is: ', excpt.__class__.__name__)
+                    print_exc()
 
 
     def closeAll(self):
@@ -126,13 +155,14 @@ class Gui(QtWidgets.QMainWindow):
         Select and open a video file from the system file manager for analysis.
         '''
 
-        self.filename = QtWidgets.QFileDialog.getOpenFileName(self, 'Open Video')
+        self.filename = QtWidgets.QFileDialog.getOpenFileName(self, 'Open Video', self.vid_dir)
         self.filename = str(self.filename[0])
         # We get a zero division error on self.length if the filename is empty.
         try:
             # Don't even try if user pressed 'Cancel' in file dialog
             if not self.filename == '':
                 print(self.filename+'\n')
+                self.writeConfig()
                 self.capture = cv2.VideoCapture(self.filename)
                 self.capture.open(self.filename)
                 self.currentFrame = np.array([])
@@ -145,8 +175,7 @@ class Gui(QtWidgets.QMainWindow):
                 self.ui.lcdNumber.display('00:00:00')
                 self.slide.setSliderPosition(0)
                 self.cont = 0
-                capture = self.captureNextFrame()
-                print(capture)
+                self.captureNextFrame()
 
         except ZeroDivisionError:
             errorNotif(self, '<br>Not a recognized video format.</br>')
@@ -233,6 +262,20 @@ class Gui(QtWidgets.QMainWindow):
     def playPressed(self):
         '''Play the video in the main window.'''
         self._timer.start()
+
+
+    def writeConfig(self):
+        '''Write data to config file for future runs.'''
+        with open(self.config, 'w') as conf:
+            try:
+                dir = path.dirname(path.realpath(self.filename))
+                conf.writelines(dir)
+
+            except TypeError as excpt:
+                # Return exception to terminal if run as script, but otherwise
+                # don't bother user.
+                print('type is: ', excpt.__class__.__name__)
+                print_exc()
 
 
     def enterStartT(self):

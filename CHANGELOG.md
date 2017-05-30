@@ -1,3 +1,8 @@
+## 0.0.4 (development)
+ * Open file dialog for selecting videos in the same location as the last run,
+    rather than in the present working directory. For the first run, the
+    behavior is unchanged.
+
 ## 0.0.3 (05.25.2017)
  * Don't restart video when current frame is also the last (useable) frame.
  * Overwrite existing graph(s) instead of appending - prevents formatting errors
