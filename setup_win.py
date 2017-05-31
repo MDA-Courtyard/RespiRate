@@ -20,7 +20,15 @@ if os.path.exists('build') == True:
 if os.path.exists('dist') == True:
     shutil.rmtree('dist', ignore_errors=True)
 
-subprocess.call(['pyinstaller', '--noconsole', '--clean', '--icon=RespiRate.ico', 'RespiRate.py'])
+main = ['pyinstaller']
+excludes = ['--exclude-module=tkinter']
+opts = ['--noconsole', '--clean', '--icon=RespiRate.ico',]
+target = ['RespiRate.py']
+
+cmd = main + excludes + opts + target
+print(cmd)
+
+subprocess.call(cmd)
 
 # Copy the icon
 shutil.copyfile('RespiRate.ico', pwd+'\dist\RespiRate\RespiRate.ico')
