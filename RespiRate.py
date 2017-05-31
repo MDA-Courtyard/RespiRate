@@ -45,35 +45,34 @@ class Gui(QtWidgets.QMainWindow):
         self.ui.lineEdit_lenMeasure.textChanged.connect(self.enableButton3)
         self.ui.pushButton_Contour.setEnabled(False)
         self.ui.textBrowser_Output.setReadOnly(True)
-        self._process = QtCore.QProcess(self)
         # Set up a config file
         makedirs(path.join(path.expanduser('~'), '.RespiRate'), exist_ok=True)
         self.dir = path.abspath(path.join(path.expanduser('~'), '.RespiRate'))
         self.config = path.abspath(path.join(self.dir, 'RRconf.txt'))
 
+        rcParams['figure.figsize'] = 14, 2
+        self.capture = 0
         self.cont = 0
+        self.currentFrame = 0
+        self.displayTime = 0
         self.enableCount = 0
         self.enableCount2 = 0
         self.enableCount3 = 0
-        rcParams['figure.figsize'] = 14, 2
-        self.filename = 0
-        self.capture = 0
-        self.length = 0
-        self.currentFrame = 0
         self.endTimemsec = 0
-        self.img = 0
-        self.sliderVal = 0
-        self.timeInSec = 0
-        self.displayTime = 0
-        self.totalCount = 0
-        self.lenOfMeas = 0
-        self.startTimemsec = 0
+        self.filename = 0
         self.firstframe = 0
+        self.img = 0
         self.lastframe = 0
         self.length = 0
+        self.lenOfMeas = 0
         self.numberOfMice = 0
+        self.sliderVal = 0
+        self.startTimemsec = 0
+        self.timeInSec = 0
+        self.totalCount = 0
         self.vid_dir = getcwd()
         self.version = '0.0.4~development'
+        self._process = QtCore.QProcess(self)
         self._timer = QtCore.QTimer(self)
         if self.cont == 0:
             self._timer.timeout.connect(self.captureNextFrame)
