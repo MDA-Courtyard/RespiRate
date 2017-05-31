@@ -46,20 +46,13 @@ def xOutput(self, toPrintList, workBook, sheetName):
                     # Set up the spreadsheet
                     book = xlwt.Workbook()
                     sheet1 = book.add_sheet('Sheet1')
-                    column0 = 'Video #'
-                    column1 = 'Mouse #'
-                    column2 = 'Start Time'
-                    column3 = 'End Time'
-                    column4 = 'Total Time'
-                    column5 = 'Best RR'
-                    column6 = 'stdev'
-                    sheet1.write(0, 0, column0)
-                    sheet1.write(0, 1, column1)
-                    sheet1.write(0, 2, column2)
-                    sheet1.write(0, 3, column3)
-                    sheet1.write(0, 4, column4)
-                    sheet1.write(0, 5, column5)
-                    sheet1.write(0, 6, column6)
+                    sheet1.write(0, 0, 'Video #')
+                    sheet1.write(0, 1, 'Mouse #')
+                    sheet1.write(0, 2, 'Start Time')
+                    sheet1.write(0, 3, 'End Time')
+                    sheet1.write(0, 4, 'Total Time')
+                    sheet1.write(0, 5, 'Best RR')
+                    sheet1.write(0, 6, 'stdev')
                     book.save(file_path)
                     created_msg = ('Spreadsheet was created as `output1.xls` in'
                             ' the RespiRate folder.')
