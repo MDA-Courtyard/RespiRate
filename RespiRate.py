@@ -89,24 +89,23 @@ class Gui(QtWidgets.QMainWindow):
             with open(self.config, 'w+') as f:
                 f.close()
 
-        # The file does exist - get the location of the last loaded video.
+        # The file exist - get the location of the last loaded video.
         elif path.isfile(self.config) == True:
             with open(self.config, 'r+') as f:
-                # We need try/except in case the config file is empty for some
-                # reason
+                # We need try/except in case the config file is empty
                 try:
                     data = f.read().splitlines()
                     self.vid_dir = data[0]
                 except IndexError  as excpt:
                     # Return exception to terminal if run as script, but
-                    # otherwise don't bother user.
+                    # otherwise don't bother the user.
                     print('type is: ', excpt.__class__.__name__)
                     print_exc()
 
 
     def closeAll(self):
         '''Shut down cleanly when Quit is clicked.'''
-        if isinstance(self.capture, int) == False:
+        if isinstance(self.capture, int) == False: # A video is loaded
             self.capture.release()
         cv2.destroyAllWindows()
         self._timer.stop()
@@ -177,7 +176,9 @@ class Gui(QtWidgets.QMainWindow):
                 self.cont = 0
                 self.captureNextFrame()
 
-        except ZeroDivisionError:
+        except ZeroDivisionError as excpt:
+            print('type is: ', excpt.__class__.__name__)
+            print_exc()
             errorNotif(self, '<br>Not a recognized video format.</br>')
             self.filename = 0
 
@@ -235,7 +236,9 @@ class Gui(QtWidgets.QMainWindow):
             elif self.cont == 2:
                 self._timer.stop()
 
-        except cv2.error:
+        except cv2.error as excpt:
+            print('type is: ', excpt.__class__.__name__)
+            print_exc()
             self.capture.release()
             self._timer.stop()
             errorNotif(self, '<br>Not a recognized video format.</br>')
