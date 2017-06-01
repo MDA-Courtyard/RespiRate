@@ -672,9 +672,8 @@ def main():
     ex1.raise_()
     ex1.show()
     ex1.activateWindow()
-    app.exec_()
     ex1._timer.stop()
-    sys.exit(0)
+    sys.exit(app.exec_())
 
 
 if __name__ == '__main__':

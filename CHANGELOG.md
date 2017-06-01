@@ -2,6 +2,8 @@
  * Open file dialog for selecting videos in the same location as the last run,
     rather than in the present working directory. For the first run, the
     behavior is unchanged.
+ * Remove unnecessary code from binary installer
+ * Better handling of sys.exit()
 
 ## 0.0.3 (05.25.2017)
  * Don't restart video when current frame is also the last (useable) frame.
