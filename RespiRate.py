@@ -191,6 +191,7 @@ class Gui(QtWidgets.QMainWindow):
         if not ssheet == '':
             print('Opening %r' % ssheet)
             if system() == 'Windows':
+                # We have to run the command through a shell in Windows
                 self._process.start('cmd.exe', ['/c', 'start', ssheet])
             elif system() == 'Darwin':
                 self._process.start('open', [ssheet])
@@ -237,6 +238,7 @@ class Gui(QtWidgets.QMainWindow):
             elif self.cont == 2:
                 self._timer.stop()
 
+        # Not a usable video format.
         except cv2.error as excpt:
             print('type is: ', excpt.__class__.__name__)
             print_exc()
@@ -252,6 +254,7 @@ class Gui(QtWidgets.QMainWindow):
 
 
     def tick(self):
+        '''Change time display and slider location in main window.'''
         timecv = self.capture.get(0)
         self.timeInSec = timecv / 1000
         self.displayTime = QtCore.QTime((timecv / 3600000) % 60, (timecv / 60000) % 60, (timecv / 1000) % 60)
@@ -359,14 +362,13 @@ class Gui(QtWidgets.QMainWindow):
 
                 mouseNum, ok = QtWidgets.QInputDialog.getText(self, 'Mouse ID',
                     'Please enter the Mouse #')
-                print(ok)
-                print(mouseNum)
                 if ok and mouseNum:
                     print(mouseNum)
                     mouseNumList.append(mouseNum)
                     inconty = mv.insideContour(conty, img)
                     incontours.append(inconty)
                 else:
+                    # If the user presses Cancel, close the contour window
                     cv2.destroyWindow('Click the outline of your ROI:')
                     return
 
@@ -448,6 +450,8 @@ class Gui(QtWidgets.QMainWindow):
                 if np.any(sts[numba]) == 0:
                         endTime = self.capture.get(0)
                         break
+
+                # Show the respiratory motion in a new window
                 img = cv2.add(frame, mask)
                 cv2.imshow('flow', img)
                 k = cv2.waitKey(30) & 0xff
@@ -553,6 +557,8 @@ class Gui(QtWidgets.QMainWindow):
                 plt.tight_layout() # Don't cut off the title and x-label
                 plt.show()
 
+                # Output respiratory rate and stdev to console; don't show if
+                # running standalone
                 print('Best: ' + str([round(elem, 3) for elem in best]) + '\n')
                 print('Best Stdev: ' + str([round(elem, 4) for elem in beststdev]) + '\n')
 
@@ -571,7 +577,7 @@ class Gui(QtWidgets.QMainWindow):
                     if ind == 3:
                         dists[numba].append(distBTpeaksyb[bp])
 
-            # Show results in GUI display box
+            # Show results in main window
             for numba in range(0, self.numberOfMice):
                 toPrint1 = mouseNumList[numba]
                 toPrint2 = round(bRespRates[numba], 2)
@@ -588,9 +594,8 @@ class Gui(QtWidgets.QMainWindow):
             print('export', export) #Debugging
             if export == 'yes':
                 for numba in range(0, self.numberOfMice):
-                    # videoNum = re.search('Video (.*)\.', self.filename).group(1)
-                    videoNum = path.splitext(path.basename(self.filename))[0]
-                    toPrintList = [str(videoNum), str(mouseNumList[numba]),
+                    videoName = path.splitext(path.basename(self.filename))[0]
+                    toPrintList = [str(videoName), str(mouseNumList[numba]),
                         str(startTimeSec), str(endTime / 1000),
                         str((endTime / 1000) - (startTimeSec)),
                         str(round(bRespRates[numba], 2)),
@@ -609,7 +614,7 @@ class Gui(QtWidgets.QMainWindow):
                 ' is not suitable for respiration measurements.</br>')
             errorNotif(self, msg)
 
-        # Close the secondary windows.
+        # Close the separate video windows.
         cv2.destroyAllWindows()
 
 
