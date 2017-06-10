@@ -173,6 +173,8 @@ class Gui(QtWidgets.QMainWindow):
                 self.ui.lcdNumber.display('00:00:00')
                 self.slide.setSliderPosition(0)
                 self.cont = 0
+                title = 'RespiRate - '+self.filename
+                self.setWindowTitle(title)
                 self.captureNextFrame()
 
         except ZeroDivisionError as excpt:
