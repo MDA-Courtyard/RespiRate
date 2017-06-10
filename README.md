@@ -123,7 +123,7 @@ will occur on the first run of the program.
 <br><br><br><br>
 ## Error Detection
 RespiRate comes with robust error-checking functionality to detect user-input
-mistaked or runtime errors that would cause it to fail.
+mistakes or runtime errors that would cause it to fail.
 
 <br><br><br>
 ![](data/error_novid.png)  
