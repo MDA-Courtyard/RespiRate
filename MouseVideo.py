@@ -2,13 +2,12 @@
 # Copyright (C) 2017 Ashlar Ruby
 # Licensed under the MIT license. See COPYING.md for details.
 
-import math
 import numpy as np
 import cv2
 import matplotlib as mpl
-
-#-------------------------------------------------------------------------------------
-
+"""
+Various instructions for handling the external OpenCV windows.
+"""
 class frameReader:
     '''
     Read frames from a video, with options to display,
