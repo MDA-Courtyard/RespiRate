@@ -53,7 +53,7 @@ class Gui(QtWidgets.QMainWindow):
         rcParams['figure.figsize'] = 14, 2
         self.capture = 0
         self.cont = 0
-        self.currentFrame = 0
+        self.currentFrame = np.array([])
         self.displayTime = 0
         self.enableCount = 0
         self.enableCount2 = 0
@@ -164,7 +164,6 @@ class Gui(QtWidgets.QMainWindow):
                 self.writeConfig()
                 self.capture = cv2.VideoCapture(self.filename)
                 self.capture.open(self.filename)
-                self.currentFrame = np.array([])
                 self.length = int(self.capture.get(7) / self.capture.get(5))
                 self.endTimemsec = self.length * 1000
                 self.slide.setMinimum(0)
@@ -340,7 +339,7 @@ class Gui(QtWidgets.QMainWindow):
         self.slide.setMinimum(startTimeSec)
         self.slide.setMaximum(self.length + startTimeSec)
         self.slide.setSliderPosition(startTimeSec)
-        self.captureNextFrame()
+        self.captureNextFrame() #TODO This may not be needed - investigate!
         self._timer.start()
 
         incontours = []
