@@ -59,6 +59,7 @@ class Gui(QtWidgets.QMainWindow):
         self.enableCount2 = 0
         self.enableCount3 = 0
         self.endTimemsec = 0
+        self.TIME = 0
         self.filename = 0
         self.firstframe = 0
         self.img = 0
@@ -175,6 +176,8 @@ class Gui(QtWidgets.QMainWindow):
                 self.cont = 0
                 title = 'RespiRate - '+self.filename
                 self.setWindowTitle(title)
+                self.TIME = self.endTimemsec
+                print(self.endTimemsec)
                 self.captureNextFrame()
 
         except ZeroDivisionError as excpt:
@@ -327,7 +330,7 @@ class Gui(QtWidgets.QMainWindow):
             return
 
         # Number of mice we are using.
-        self.numberOfMice = len([int(x) for x in mice.split(',')])
+        self.numberOfMice = len(mice.split(','))
         startTimehhmmss = [int(x) for x in tsec.split(':')]
         # Time (in seconds) that we begin the measurement
         startTimeSec = (3600 * startTimehhmmss[0]) + (60 * startTimehhmmss[1]) + startTimehhmmss[2]

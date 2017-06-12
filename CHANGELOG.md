@@ -5,6 +5,7 @@
  * Remove unnecessary code from binary installer
  * Better handling of sys.exit()
  * Show current video name and location in titlebar: i.e. "RespiRate - sample.mp4"
+ * Bugfix: allow mouse ID to be a non-integer (previously exited with error)
 
 ## 0.0.3 (05.25.2017)
  * Don't restart video when current frame is also the last (useable) frame.
