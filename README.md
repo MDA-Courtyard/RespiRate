@@ -27,7 +27,10 @@ Use RespiRate_x64.exe for Windows 64-bit, and RespiRate_x32.exe for Windows
 You can also download a sample video from [here](https://raw.githubusercontent.com/MDA-Courtyard/RespiRate/master/sample.mp4).  
 Some browsers may not automatically download the video. In that case,
 right-click and choose "Save Video As..." (wording may vary depending on your
-browser).
+browser).  
+
+For running from source, see [Advanced](#advanced)
+
 <br><br><br><br>
 ## Using RespiRate
 ![](data/mainwin.png)  
@@ -144,6 +147,12 @@ format the program understands, such as “20s” instead of “20”.
 If you have selected a region on a mouse that is not suitable for respiratory
 measurements, such as a region in which the camera is out of focus, the program
 will stop running with a warning.
+
+<br><br><br><br>
+## Advanced
+You may also download the source code and run RespiRate directly from Python 3.  
+Install the dependencies listed in BUILDING.md and open a command prompt in the
+same location as the source, then start it with `python RespiRate.py`.
 
 <br><br><br><br>
 ## Licensing
