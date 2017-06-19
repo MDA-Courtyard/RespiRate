@@ -29,7 +29,7 @@ Some browsers may not automatically download the video. In that case,
 right-click and choose "Save Video As..." (wording may vary depending on your
 browser).  
 
-For running from source, see [Advanced](#advanced)
+For running from source, see [Advanced](#advanced).
 
 <br><br><br><br>
 ## Using RespiRate

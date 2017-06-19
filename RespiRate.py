@@ -69,6 +69,7 @@ class Gui(QtWidgets.QMainWindow):
         self.numberOfMice = 0
         self.sliderVal = 0
         self.startTimemsec = 0
+        self.test = errorCheck
         self.timeInSec = 0
         self.totalCount = 0
         self.vid_dir = getcwd()
@@ -156,35 +157,37 @@ class Gui(QtWidgets.QMainWindow):
 
         self.filename = QtWidgets.QFileDialog.getOpenFileName(self, 'Open Video', self.vid_dir)
         self.filename = str(self.filename[0])
-        # We get a zero division error on self.length if the filename is empty.
-        try:
-            # Don't even try if user pressed 'Cancel' in file dialog
-            if not self.filename == '':
-                print(self.filename+'\n')
-                self.vid_dir = path.dirname(path.realpath(self.filename))
-                self.writeConfig()
-                self.capture = cv2.VideoCapture(self.filename)
-                self.capture.open(self.filename)
-                self.length = int(self.capture.get(7) / self.capture.get(5))
-                self.endTimemsec = self.length * 1000
-                self.slide.setMinimum(0)
-                self.slide.setMaximum(self.length)
-                self.slide.setTracking(0)
-                self.ui.lcdNumber.setNumDigits(8)
-                self.ui.lcdNumber.display('00:00:00')
-                self.slide.setSliderPosition(0)
-                self.cont = 0
-                title = 'RespiRate - '+self.filename
-                self.setWindowTitle(title)
-                self.TIME = self.endTimemsec
-                print(self.endTimemsec)
-                self.captureNextFrame()
+        # Has the video been loaded properly?
+        # We could use fileCheck just as well here, but let's keep the two tests
+        # distinct for now.
+        if self.test.nameCheck(self) == 'error':
+            return
 
-        except ZeroDivisionError as excpt:
-            print('type is: ', excpt.__class__.__name__)
-            print_exc()
-            errorNotif(self, '<br>Not a recognized video format.</br>')
-            self.filename = 0
+        print(self.filename+'\n')
+        self.vid_dir = path.dirname(path.realpath(self.filename))
+        self.capture = cv2.VideoCapture(self.filename)
+        self.capture.open(self.filename)
+
+        # Is the file a readable video file?
+        if self.test.fileCheck(self) == 'error':
+            return
+
+        self.length = int(self.capture.get(7) / self.capture.get(5))
+        self.endTimemsec = self.length * 1000
+        self.slide.setMinimum(0)
+        self.slide.setMaximum(self.length)
+        self.slide.setTracking(0)
+        self.ui.lcdNumber.setNumDigits(8)
+        self.ui.lcdNumber.display('00:00:00')
+        self.slide.setSliderPosition(0)
+        self.cont = 0
+        title = 'RespiRate - '+self.filename
+        self.setWindowTitle(title)
+        self.TIME = self.endTimemsec
+        print(self.endTimemsec)
+        self.writeConfig()
+        self.captureNextFrame()
+
 
     def openOutput(self):
         '''Open the spreadsheet to which mouse data is exported.'''
@@ -203,9 +206,7 @@ class Gui(QtWidgets.QMainWindow):
 
 
     def captureNextFrame(self):
-        '''capture frame and reverse RGB BGR and return opencv image'''
-        # Some file types, like .ico files, make it through the try-except in
-        # self.openNew since OpenCV can read them. This should catch them.
+        '''Capture frame and reverse RGB BGR and return opencv image'''
         try:
             if self.cont == 0:
                 ret, readFrame = self.capture.read()
@@ -249,6 +250,8 @@ class Gui(QtWidgets.QMainWindow):
             self._timer.stop()
             errorNotif(self, '<br>Not a recognized video format.</br>')
             return
+
+
 
     def slider_value_change(self, value):
         '''If the slide is moved manually, skip the video to the corresponding time.'''
@@ -324,9 +327,15 @@ class Gui(QtWidgets.QMainWindow):
         tsec = self.ui.lineEdit_startT.text()
         self.lenOFMeas = self.ui.lineEdit_lenMeasure.text()
 
-        # Do a quick scan for errors and halt execution if necessary.
-        error_check = self.errorCheck(tsec)
-        if error_check == 'error':
+        # Do a quick scan for errors and halt execution if necessary:
+        # Was a video loaded before 'Contour' was pressed?
+        if self.test.nameCheck(self) == 'error':
+            return
+        # Has the time been typed incorrectly?
+        elif self.test.timeCheck(self, tsec) == 'error':
+            return
+        # Is the given length of measurement an integer?
+        elif self.test.measLen(self) == 'error':
             return
 
         # Number of mice we are using.
@@ -347,7 +356,7 @@ class Gui(QtWidgets.QMainWindow):
         self.slide.setMinimum(startTimeSec)
         self.slide.setMaximum(self.length + startTimeSec)
         self.slide.setSliderPosition(startTimeSec)
-        self.captureNextFrame() #TODO This may not be needed - investigate!
+        # self.captureNextFrame() #TODO This may not be needed - investigate!
         self._timer.start()
 
         incontours = []
@@ -621,45 +630,74 @@ class Gui(QtWidgets.QMainWindow):
         cv2.destroyAllWindows()
 
 
-    def errorCheck(self, tsec):
-        '''Check for common mistakes and return a notification.'''
-        msg_video = '<br>You have not selected a video!</br>'
-        msg_time = '<br>Time must be in hh:mm:ss format</br>.'
-        msg_len = '<br>The given length of measurement cannot be understood.</br>'
-        tsec = str(tsec)
-        time_check = tsec.split(':')
-        len_measure = str(self.lenOFMeas)
 
-        # A video hasn't been selected. Note that this doesn't detect if the
-        # selected file is actually a video, but only if a file (any type) has
-        # been chosen.
+class errorCheck:
+    def nameCheck(self):
+        '''Check that the video has been assigned.'''
         if self.filename == 0 or self.filename == u'':
+            msg_video = '<br>You have not selected a video!</br>'
             errorNotif(self, msg_video)
-            return 'error'
+            return('error')
 
-        # Check if measurement length makes sense
-        elif len_measure.isdigit() == False:
-            errorNotif(self, msg_len)
-            return 'error'
 
+    def fileCheck(self):
+        '''Make sure user-selected file is actually a video.'''
+        msg_video = '<br>Not a recognized video format.</br>'
+        # ret, readFrame = self.capture.read()
+        # print('ret', ret)
+        codec = self.capture.get(6)
+        print(codec)
+        if codec == 0.0:
+
+            errorNotif(self, msg_video)
+            return('error')
+
+        # # Check if there is another frame in the file. If not, the file is
+        # # not a video. Note that if this passes, it doesn't mean that the file
+        # # is a video.
+        # # Catches .pngs but misses .jpgs
+        # if ret == False:
+        #     errorNotif(self, msg_video)
+        #     return('error')
+
+
+    def timeCheck(self, tsec):
+        '''
         # Check the following:
+        # - Start time input is only integers (no letters or special characters)
         # - Start time is in correct format (hh:mm:ss)
         # - Second and minute input don't go above 59
-        # - Start time input is only integers (no letters or special characters)
-        elif len(tsec) != 8:
+        '''
+        tsec = str(tsec)
+        time_check = tsec.split(':')
+        msg_time = '<br>Time must be in hh:mm:ss format</br>.'
+
+        # Only integers
+        for num in time_check:
+            if num.isdigit() == False:
+                print('false')
+                errorNotif(self, msg_time)
+                return('error')
+
+        # Correct format
+        if len(tsec) != 8:
             errorNotif(self, msg_time)
-            return 'error'
+            return('error')
         elif tsec[2] != ':' or tsec[5] != ':':
             errorNotif(self, msg_time)
-            return 'error'
-        elif 1 == 1: # Bit of a ugly hack
-            for num in time_check:
-                if num.isdigit() == False:
-                    errorNotif(self, msg_time)
-                    return 'error'
+            return('error')
+
+        # Second and minute are not too high
         elif int(time_check[-1]) > 59 or int(time_check[-2]) > 59:
             errorNotif(self, msg_time)
-            return 'error'
+            return('error')
+
+
+    def measLen(self):
+        if str(self.lenOFMeas).isdigit() == False:
+            msg_len = '<br>The given length of measurement cannot be understood.</br>'
+            errorNotif(self, msg_len)
+            return('error')
 
 
 
