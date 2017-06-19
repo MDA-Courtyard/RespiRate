@@ -207,49 +207,49 @@ class Gui(QtWidgets.QMainWindow):
 
     def captureNextFrame(self):
         '''Capture frame and reverse RGB BGR and return opencv image'''
-        try:
-            if self.cont == 0:
-                ret, readFrame = self.capture.read()
-                self.currentFrame = cv2.cvtColor(readFrame, cv2.COLOR_BGR2RGB)
-                height,width = self.currentFrame.shape[:2]
-                self.img = QtGui.QImage(self.currentFrame,
-                                  width,
-                                  height,
-                                  QtGui.QImage.Format_RGB888)
-                self.img = QtGui.QPixmap(self.img)
-                self.ui.videoFrame.setPixmap(self.img.scaled(self.ui.videoFrame.size(), QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
-                if self.capture.get(0) > self.endTimemsec:
-                    self.capture.set(0, self.startTimemsec)
-                self._timer.timeout.connect(self.tick)
-                self._timer.start()
+        # try:
+        if self.cont == 0:
+            ret, readFrame = self.capture.read()
+            self.currentFrame = cv2.cvtColor(readFrame, cv2.COLOR_BGR2RGB)
+            height,width = self.currentFrame.shape[:2]
+            self.img = QtGui.QImage(self.currentFrame,
+                              width,
+                              height,
+                              QtGui.QImage.Format_RGB888)
+            self.img = QtGui.QPixmap(self.img)
+            self.ui.videoFrame.setPixmap(self.img.scaled(self.ui.videoFrame.size(), QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
+            if self.capture.get(0) > self.endTimemsec:
+                self.capture.set(0, self.startTimemsec)
+            self._timer.timeout.connect(self.tick)
+            self._timer.start()
 
-            elif self.cont == 1:
-                ret, readFrame = self.capture.read()
-                self.currentFrame = cv2.cvtColor(readFrame,cv2.COLOR_BGR2RGB)
-                height,width = self.currentFrame.shape[:2]
-                self.img = QtGui.QImage(self.currentFrame,
-                                  width,
-                                  height,
-                                  QtGui.QImage.Format_RGB888)
-                self.img = QtGui.QPixmap(self.img)
-                self.ui.videoFrame.setPixmap(self.img.scaled(self.ui.videoFrame.size(),
-                    QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
-                if self.capture.get(0) >= self.endTimemsec:
-                    self.capture.set(0, self.startTimemsec)
-                self._timer.timeout.connect(self.tick)
-                self._timer.start()
+        elif self.cont == 1:
+            ret, readFrame = self.capture.read()
+            self.currentFrame = cv2.cvtColor(readFrame,cv2.COLOR_BGR2RGB)
+            height,width = self.currentFrame.shape[:2]
+            self.img = QtGui.QImage(self.currentFrame,
+                              width,
+                              height,
+                              QtGui.QImage.Format_RGB888)
+            self.img = QtGui.QPixmap(self.img)
+            self.ui.videoFrame.setPixmap(self.img.scaled(self.ui.videoFrame.size(),
+                QtCore.Qt.KeepAspectRatio, QtCore.Qt.SmoothTransformation))
+            if self.capture.get(0) >= self.endTimemsec:
+                self.capture.set(0, self.startTimemsec)
+            self._timer.timeout.connect(self.tick)
+            self._timer.start()
 
-            elif self.cont == 2:
-                self._timer.stop()
-
-        # Not a usable video format.
-        except cv2.error as excpt:
-            print('type is: ', excpt.__class__.__name__)
-            print_exc()
-            self.capture.release()
+        elif self.cont == 2:
             self._timer.stop()
-            errorNotif(self, '<br>Not a recognized video format.</br>')
-            return
+        #
+        # # Not a usable video format.
+        # except cv2.error as excpt:
+        #     print('type is: ', excpt.__class__.__name__)
+        #     print_exc()
+        #     self.capture.release()
+        #     self._timer.stop()
+        #     errorNotif(self, '<br>Not a recognized video format.</br>')
+        #     return
 
 
 
@@ -646,9 +646,7 @@ class errorCheck:
         # ret, readFrame = self.capture.read()
         # print('ret', ret)
         codec = self.capture.get(6)
-        print(codec)
         if codec == 0.0:
-
             errorNotif(self, msg_video)
             return('error')
 
