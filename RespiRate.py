@@ -44,6 +44,7 @@ class Gui(QtWidgets.QMainWindow):
         self.ui.lineEdit_startT.textChanged.connect(self.enableButton2)
         self.ui.lineEdit_lenMeasure.textChanged.connect(self.enableButton3)
         self.ui.pushButton_Contour.setEnabled(False)
+        self.ui.pushButton_SelectST.setEnabled(False)
         self.ui.textBrowser_Output.setReadOnly(True)
         # Set up a config file
         makedirs(path.join(path.expanduser('~'), '.RespiRate'), exist_ok=True)
@@ -73,7 +74,7 @@ class Gui(QtWidgets.QMainWindow):
         self.timeInSec = 0
         self.totalCount = 0
         self.vid_dir = getcwd()
-        self.version = '0.0.4~development'
+        self.version = '0.0.4'
         self._process = QtCore.QProcess(self)
         self._timer = QtCore.QTimer(self)
         if self.cont == 0:
@@ -185,6 +186,7 @@ class Gui(QtWidgets.QMainWindow):
         self.setWindowTitle(title)
         self.TIME = self.endTimemsec
         print(self.endTimemsec)
+        self.ui.pushButton_SelectST.setEnabled(True)
         self.writeConfig()
         self.captureNextFrame()
 

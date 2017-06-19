@@ -11,9 +11,6 @@ Sign Windows installer
 
 Allow the user to save the spreadsheet wherever he/she wants.
 
-Consider changing errorCheck to a class so we can use individual parts when
-needed instead of having to run the whole thing every time
-
 Use a dedicated Qt window for the videos so we can look at cross-platform
 
 DONE:
@@ -69,3 +66,9 @@ DONE: Detect if an existing graph for the same mouse exists from a previous run,
 and overwrite as needed.
 
 DONE: Move everything to Qt
+
+DONE: The error check function is now a class so we can use only certain tests
+as necessary
+
+DONE: Don't enable 'Select start time' button until video is loaded (prevents
+exit with errors).

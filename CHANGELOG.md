@@ -1,4 +1,4 @@
-## 0.0.4 (development)
+## 0.0.4 (06/19/2017)
  * Open file dialog for selecting videos in the same location as the last run,
     rather than in the present working directory. For the first run, the
     behavior is unchanged.
