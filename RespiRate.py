@@ -155,7 +155,7 @@ class Gui(QtWidgets.QMainWindow):
         '''
         Select and open a video file from the system file manager for analysis.
         '''
-
+        self._timer.stop()
         self.filename = QtWidgets.QFileDialog.getOpenFileName(self, 'Open Video', self.vid_dir)
         self.filename = str(self.filename[0])
         # Has the video been loaded properly?
