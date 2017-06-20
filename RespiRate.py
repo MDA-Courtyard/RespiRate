@@ -162,6 +162,8 @@ class Gui(QtWidgets.QMainWindow):
         # We could use fileCheck just as well here, but let's keep the two tests
         # distinct for now.
         if self.test.nameCheck(self) == 'error':
+            # Make sure the select start time button is disabled
+            self.ui.pushButton_SelectST.setEnabled(False)
             return
 
         print(self.filename+'\n')
@@ -171,6 +173,8 @@ class Gui(QtWidgets.QMainWindow):
 
         # Is the file a readable video file?
         if self.test.fileCheck(self) == 'error':
+            # Make sure the select start time button is disabled
+            self.ui.pushButton_SelectST.setEnabled(False)
             return
 
         self.length = int(self.capture.get(7) / self.capture.get(5))
