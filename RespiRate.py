@@ -185,7 +185,6 @@ class Gui(QtWidgets.QMainWindow):
         title = 'RespiRate - '+self.filename
         self.setWindowTitle(title)
         self.TIME = self.endTimemsec
-        print(self.endTimemsec)
         self.ui.pushButton_SelectST.setEnabled(True)
         self.writeConfig()
         self.captureNextFrame()
@@ -243,16 +242,6 @@ class Gui(QtWidgets.QMainWindow):
 
         elif self.cont == 2:
             self._timer.stop()
-        #
-        # # Not a usable video format.
-        # except cv2.error as excpt:
-        #     print('type is: ', excpt.__class__.__name__)
-        #     print_exc()
-        #     self.capture.release()
-        #     self._timer.stop()
-        #     errorNotif(self, '<br>Not a recognized video format.</br>')
-        #     return
-
 
 
     def slider_value_change(self, value):
@@ -540,9 +529,6 @@ class Gui(QtWidgets.QMainWindow):
                         'weight': 'normal',
                         'size': 12}
 
-                # debugging
-                print(numba)
-
                 # Plotting
                 print('distInd', distInd)
                 xaxis = range(0, len(pointx[numba]))
@@ -645,28 +631,20 @@ class errorCheck:
     def fileCheck(self):
         '''Make sure user-selected file is actually a video.'''
         msg_video = '<br>Not a recognized video format.</br>'
-        # ret, readFrame = self.capture.read()
-        # print('ret', ret)
+        # Test if the file was encoded in a recognizable video codec type. If
+        # not, it's not a (useable) video.
         codec = self.capture.get(6)
         if codec == 0.0:
             errorNotif(self, msg_video)
             return('error')
 
-        # # Check if there is another frame in the file. If not, the file is
-        # # not a video. Note that if this passes, it doesn't mean that the file
-        # # is a video.
-        # # Catches .pngs but misses .jpgs
-        # if ret == False:
-        #     errorNotif(self, msg_video)
-        #     return('error')
-
 
     def timeCheck(self, tsec):
         '''
-        # Check the following:
-        # - Start time input is only integers (no letters or special characters)
-        # - Start time is in correct format (hh:mm:ss)
-        # - Second and minute input don't go above 59
+        Check the following:
+         - Start time input is only integers (no letters or special characters)
+         - Start time is in correct format (hh:mm:ss)
+         - Second and minute input don't go above 59
         '''
         tsec = str(tsec)
         time_check = tsec.split(':')
@@ -694,6 +672,7 @@ class errorCheck:
 
 
     def measLen(self):
+        '''Make sure the measurement length makes sense.'''
         if str(self.lenOFMeas).isdigit() == False:
             msg_len = '<br>The given length of measurement cannot be understood.</br>'
             errorNotif(self, msg_len)
