@@ -13,6 +13,7 @@
  * The error check functionality has been promoted to a class so we can call
      certain aspects as needed.
  * Greatly improved detection and rejection of non-video files
+ * Disable 'Select Start Time' button if a video is not loaded
 
 ## 0.0.3 (05.25.2017)
  * Don't restart video when current frame is also the last (useable) frame.
