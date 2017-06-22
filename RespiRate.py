@@ -74,7 +74,7 @@ class Gui(QtWidgets.QMainWindow):
         self.timeInSec = 0
         self.totalCount = 0
         self.vid_dir = getcwd()
-        self.version = '0.0.4'
+        self.version = '0.0.5~development'
         self._process = QtCore.QProcess(self)
         self._timer = QtCore.QTimer(self)
         if self.cont == 0:
@@ -99,7 +99,7 @@ class Gui(QtWidgets.QMainWindow):
                 try:
                     data = f.read().splitlines()
                     self.vid_dir = data[0]
-                except IndexError  as excpt:
+                except IndexError as excpt:
                     # Return exception to terminal if run as script, but
                     # otherwise don't bother the user.
                     print('type is: ', excpt.__class__.__name__)
@@ -370,7 +370,7 @@ class Gui(QtWidgets.QMainWindow):
                 mouseNum, ok = QtWidgets.QInputDialog.getText(self, 'Mouse ID',
                     'Please enter the Mouse #')
                 if ok and mouseNum:
-                    print(mouseNum)
+                    print('Mouse ID: ', mouseNum)
                     mouseNumList.append(mouseNum)
                     inconty = mv.insideContour(conty, img)
                     incontours.append(inconty)
@@ -624,6 +624,9 @@ class Gui(QtWidgets.QMainWindow):
 
 
 class errorCheck:
+    def __init__(self, parent=Gui):
+        pass
+
     def nameCheck(self):
         '''Check that the video has been assigned.'''
         if self.filename == 0 or self.filename == u'':
