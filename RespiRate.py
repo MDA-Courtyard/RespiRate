@@ -326,6 +326,8 @@ class Gui(QtWidgets.QMainWindow):
         # Was a video loaded before 'Contour' was pressed?
         if self.test.nameCheck(self) == 'error':
             return
+        elif self.test.fileCheck(self) == 'error':
+            return
         # Has the time been typed incorrectly?
         elif self.test.timeCheck(self, tsec) == 'error':
             return
