@@ -21,6 +21,9 @@
   <property name="toolButtonStyle">
    <enum>Qt::ToolButtonIconOnly</enum>
   </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
     <property name="leftMargin">
@@ -69,6 +72,9 @@
           <width>1000</width>
           <height>1000</height>
          </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="widgetResizable">
          <bool>true</bool>
@@ -184,6 +190,9 @@
               <height>16777215</height>
              </size>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="html">
              <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
@@ -272,6 +281,9 @@ p, li { white-space: pre-wrap; }
        </item>
        <item row="1" column="0" colspan="4">
         <widget class="QSlider" name="horizontalSlider">
+         <property name="focusPolicy">
+          <enum>Qt::ClickFocus</enum>
+         </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
@@ -587,6 +599,19 @@ p, li { white-space: pre-wrap; }
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>lineEdit_mouseID</tabstop>
+  <tabstop>lineEdit_startT</tabstop>
+  <tabstop>lineEdit_lenMeasure</tabstop>
+  <tabstop>pushButton_Contour</tabstop>
+  <tabstop>pushButton_Play</tabstop>
+  <tabstop>pushButton_Pause</tabstop>
+  <tabstop>pushButton_SelectST</tabstop>
+  <tabstop>pushButton_Clear</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>textBrowser_Output</tabstop>
+  <tabstop>horizontalSlider</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -16,6 +16,7 @@ class Ui_MainWindow(object):
         font.setKerning(True)
         MainWindow.setFont(font)
         MainWindow.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
+        MainWindow.setTabShape(QtWidgets.QTabWidget.Rounded)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout = QtWidgets.QGridLayout(self.centralwidget)
@@ -35,6 +36,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.scrollArea.sizePolicy().hasHeightForWidth())
         self.scrollArea.setSizePolicy(sizePolicy)
         self.scrollArea.setMaximumSize(QtCore.QSize(1000, 1000))
+        self.scrollArea.setFocusPolicy(QtCore.Qt.NoFocus)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents_3 = QtWidgets.QWidget()
@@ -96,6 +98,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.textBrowser_Output.sizePolicy().hasHeightForWidth())
         self.textBrowser_Output.setSizePolicy(sizePolicy)
         self.textBrowser_Output.setMaximumSize(QtCore.QSize(800, 16777215))
+        self.textBrowser_Output.setFocusPolicy(QtCore.Qt.NoFocus)
         self.textBrowser_Output.setObjectName("textBrowser_Output")
         self.gridLayout_4.addWidget(self.textBrowser_Output, 1, 0, 1, 3)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_3)
@@ -138,6 +141,7 @@ class Ui_MainWindow(object):
         self.videoFrame.setObjectName("videoFrame")
         self.gridLayout_2.addWidget(self.videoFrame, 0, 0, 1, 5)
         self.horizontalSlider = QtWidgets.QSlider(self.frame_4)
+        self.horizontalSlider.setFocusPolicy(QtCore.Qt.ClickFocus)
         self.horizontalSlider.setOrientation(QtCore.Qt.Horizontal)
         self.horizontalSlider.setObjectName("horizontalSlider")
         self.gridLayout_2.addWidget(self.horizontalSlider, 1, 0, 1, 4)
@@ -302,6 +306,16 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        MainWindow.setTabOrder(self.lineEdit_mouseID, self.lineEdit_startT)
+        MainWindow.setTabOrder(self.lineEdit_startT, self.lineEdit_lenMeasure)
+        MainWindow.setTabOrder(self.lineEdit_lenMeasure, self.pushButton_Contour)
+        MainWindow.setTabOrder(self.pushButton_Contour, self.pushButton_Play)
+        MainWindow.setTabOrder(self.pushButton_Play, self.pushButton_Pause)
+        MainWindow.setTabOrder(self.pushButton_Pause, self.pushButton_SelectST)
+        MainWindow.setTabOrder(self.pushButton_SelectST, self.pushButton_Clear)
+        MainWindow.setTabOrder(self.pushButton_Clear, self.scrollArea)
+        MainWindow.setTabOrder(self.scrollArea, self.textBrowser_Output)
+        MainWindow.setTabOrder(self.textBrowser_Output, self.horizontalSlider)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -340,3 +354,4 @@ if __name__ == "__main__":
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
+
