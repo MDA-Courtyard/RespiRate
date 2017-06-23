@@ -269,6 +269,10 @@ class Gui(QtWidgets.QMainWindow):
 
     def playPressed(self):
         '''Play the video in the main window.'''
+        if self.test.nameCheck(self) == 'error' or 'None':
+            return
+        elif self.test.fileCheck(self) == 'error':
+            return
         self._timer.start()
 
 

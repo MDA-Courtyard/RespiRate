@@ -3,6 +3,7 @@
     crash when loading a non-video file, after having already loaded a video.
  * Make sure loaded file is a video when 'Contour' is pressed.
  * Better, more logical handling of 'Tab' key.
+ * Bugfix: don't attempt to play a video if one is not loaded.
 
 ## 0.0.4 (06/19/2017)
  * Open file dialog for selecting videos in the same location as the last run,
