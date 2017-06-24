@@ -32,8 +32,11 @@ instructions expect Python 3.6 (Anaconda is recommended).
  For 32-bit computers, use  
  `pip install .\opencv_python‑3.2.0‑cp36‑cp36m‑win32.whl`  
 
- - This program's source code. If you're reading this, you probably already have
- it.
+ - This program's source code. You may either download the source to the latest
+ stable release, available at
+ https://github.com/MDA-Courtyard/RespiRate/releases/latest,
+ or the development source, avilable at
+ https://github.com/MDA-Courtyard/RespiRate/archive/master.zip
 
 ### Building
  Inside this program's source directory, open a command prompt window and run

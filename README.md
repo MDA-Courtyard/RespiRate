@@ -151,8 +151,9 @@ will stop running with a warning.
 <br><br><br><br>
 ## Advanced
 You may also download the source code and run RespiRate directly from Python 3.  
-Install the dependencies listed in BUILDING.md and open a command prompt in the
-same location as the source, then start it with `python RespiRate.py`.
+Install the dependencies listed in [BUILDING.md](BUILDING.md#prerequisites),
+with the exception of PyInstaller. Then open a command prompt in the source
+directory, and start RespiRate with `python RespiRate.py`.
 
 <br><br><br><br>
 ## Licensing
