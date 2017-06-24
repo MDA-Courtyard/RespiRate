@@ -1,6 +1,11 @@
 Instructions for building standalone executables for Windows. These
 instructions expect Python 3.6 (Anaconda is recommended).
 
+Please note that these are not requirements for installing or running RespiRate
+from our prebuilt installers, which require no additional software inside
+Windows. These instructions only apply to building a standalone Windows
+executable yourself.
+
 ### Prerequisites
  - Python 3.6.  
  It is possible to build a standalone Windows executable with earlier versions
@@ -33,9 +38,9 @@ instructions expect Python 3.6 (Anaconda is recommended).
  `pip install .\opencv_python‑3.2.0‑cp36‑cp36m‑win32.whl`  
 
  - This program's source code. You may either download the source to the latest
- stable release, available at
- https://github.com/MDA-Courtyard/RespiRate/releases/latest,
- or the development source, avilable at
+ stable release, available at  
+ https://github.com/MDA-Courtyard/RespiRate/releases/latest,  
+ or the development source, available at  
  https://github.com/MDA-Courtyard/RespiRate/archive/master.zip
 
 ### Building
