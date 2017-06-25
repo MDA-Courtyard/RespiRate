@@ -58,6 +58,8 @@ def xOutput(self, toPrintList, workBook, sheetName):
                             ' the RespiRate folder.')
                     notifiCat.infoNotif(self, 'Success!', created_msg)
                 else:
+                    noexpt_msg = 'Data was not exported to a spreadsheet.'
+                    notifiCat.infoNotif(self, 'Not Exported', noexpt_msg)
                     return
             # The file exists (or was just created) - now write output.
             wb = xlrd.open_workbook(file_path)   #output1.xls
@@ -81,5 +83,6 @@ def xOutput(self, toPrintList, workBook, sheetName):
             # If we get this far, the spreadsheet cannot be opened (most likely
             # it is already opened in Excel or another program). Check it, close
             # it, and rerun it. Working now?
-            notifiCat.errorNotif(self, 'Data cannot be exported!\n'
-                    '<br>Please check if the spreadsheet is already opened.</br>')
+            err_msg = ('Data cannot be exported!'
+                        '<br>Please check if the spreadsheet is already opened.</br>')
+            notifiCat.errorNotif(self,err_msg)
