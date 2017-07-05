@@ -4,6 +4,9 @@
  * Make sure loaded file is a video when 'Contour' is pressed.
  * Better, more logical handling of 'Tab' key.
  * Bugfix: don't attempt to play a video if one is not loaded.
+ * Add notification that when declining to create a new spreadsheet (if needed),
+    the data was not exported even if the user previously selected 'Yes'.
+ * Add option to easily convert the output1.xls spreadsheet to csv file.
 
 ## 0.0.4 (06/19/2017)
  * Open file dialog for selecting videos in the same location as the last run,

@@ -33,6 +33,7 @@ class Gui(QtWidgets.QMainWindow):
         self.ui.actionCheck_for_Update.triggered.connect(self.updateCheck)
         self.ui.actionAbout.triggered.connect(self.About)
         self.ui.actionAbout_Qt.triggered.connect(self.AboutQt)
+        self.ui.actionConvert_to_CSV.triggered.connect(self.csvConvert)
         self.slide = self.ui.horizontalSlider
         self.slide.valueChanged.connect(self.slider_value_change)
         self.ui.pushButton_Play.clicked.connect(self.playPressed)
@@ -106,15 +107,6 @@ class Gui(QtWidgets.QMainWindow):
                     print_exc()
 
 
-    def closeAll(self):
-        '''Shut down cleanly when Quit is clicked.'''
-        if isinstance(self.capture, int) == False: # A video is loaded
-            self.capture.release()
-        cv2.destroyAllWindows()
-        self._timer.stop()
-        sys.exit(0)
-
-
     def updateCheck(self):
         '''Check for updates.'''
         resp = requests.get('https://github.com/MDA-Courtyard/RespiRate/releases/')
@@ -135,20 +127,43 @@ class Gui(QtWidgets.QMainWindow):
         '''Brief description of the program.'''
         title = 'About'
         msg = ('<p><br><b>RespiRate v'+self.version+'</b></br>'
-                '<br>Copyright (C) 2017 Ashlar Ruby</br>'
-                '<br>Licensed under the MIT license.</br></p>'
-                '<p>This program uses opencv_ffmpeg320 libraries, released'
-                '<br>and copyrighted 2001 under the LGPL by Fabrice Bellard,</br>'
-                '<br>and the PyQt5 collection of graphical toolkits.</br></p>'
-                '<p><a href="https://github.com/MDA-Courtyard/RespiRate">Home Page</a>'
-                '<br><a href="https://github.com/MDA-Courtyard/RespiRate/issues">Help</a></br>'
-                '<br><a href="https://github.com/MDA-Courtyard/RespiRate/blob/master/COPYING.md">Contributors and License</a></br></p>')
+        '<br>Copyright (C) 2017 Ashlar Ruby</br>'
+        '<br>Licensed under the MIT license.</br></p>'
+        '<p>This program uses opencv_ffmpeg320 libraries, released'
+        '<br>and copyrighted 2001 under the LGPL by Fabrice Bellard,</br>'
+        '<br>and the PyQt5 collection of graphical toolkits.</br></p>'
+        '<p><a href="https://github.com/MDA-Courtyard/RespiRate">Home Page</a>'
+        '<br><a href="https://github.com/MDA-Courtyard/RespiRate/issues">Help</a></br>'
+        '<br><a href="https://github.com/MDA-Courtyard/RespiRate/blob/master/COPYING.md">Contributors and License</a></br></p>')
         QtWidgets.QMessageBox.about(self, title, msg)
 
 
     def AboutQt(self):
         '''Show a message box about Qt (useful for debugging).'''
         QtWidgets.QMessageBox.aboutQt(self)
+
+
+    def closeAll(self):
+        '''Shut down cleanly when Quit is clicked.'''
+        if isinstance(self.capture, int) == False: # A video is loaded
+            self.capture.release()
+        cv2.destroyAllWindows()
+        self._timer.stop()
+        sys.exit(0)
+
+
+    def csvConvert(self):
+        '''Select the output .xlsx spreadsheet to convert to .csv file'''
+        location = path.join(path.expanduser('~'), 'RespiRate')
+        wbook = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File', location)
+        wbook = str(wbook[0])
+        if wbook is not '': # Make sure the file exists
+            msg = ('<br>Convert spreadsheet to csv file?</br>'
+            '<b><br>Warning: this will overwrite any existing `output1.csv`</br>'
+            '<br>files in the RespiRate folder!</br></b>')
+            conv = askQuestion(self, 'RespiRate', msg)
+            if conv == 'yes':
+                mf.convertCSV(self, location, wbook)
 
 
     def openNew(self):
@@ -197,8 +212,8 @@ class Gui(QtWidgets.QMainWindow):
     def openOutput(self):
         '''Open the spreadsheet to which mouse data is exported.'''
         location = path.join(path.expanduser('~'), 'RespiRate')
-        ssheet = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File', location)[0]
-        ssheet = str(ssheet)
+        ssheet = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File', location)
+        ssheet = str(ssheet[0])
         if not ssheet == '':
             print('Opening %r' % ssheet)
             if system() == 'Windows':

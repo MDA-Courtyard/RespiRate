@@ -4,6 +4,7 @@
 # Licensed under the MIT license. See COPYING.md for details.
 
 from os import mkdir, path
+import csv
 import xlrd
 from xlutils.copy import copy
 import xlwt
@@ -29,7 +30,7 @@ def find(stdevs, minstvar):
 def xOutput(self, toPrintList, workBook, sheetName):
     '''Export data to spreadsheet for easy review and analysis.'''
     if workBook == 0 and sheetName == 0:
-        notifiCat.errorNotif('<br>Data was not saved to spreadsheet!</br>')
+        notifiCat.errorNotif(self, '<br>Data was not saved to spreadsheet!</br>')
     else:
         try:
             # Check if the target file already exists.
@@ -86,3 +87,17 @@ def xOutput(self, toPrintList, workBook, sheetName):
             err_msg = ('Data cannot be exported!'
                         '<br>Please check if the spreadsheet is already opened.</br>')
             notifiCat.errorNotif(self,err_msg)
+
+def convertCSV(self, target_dir, workBook):
+    '''Convert the current output1.xls to a .csv file.'''
+    try:
+        wbook = xlrd.open_workbook(workBook)
+        sheet = wbook.sheet_by_name('Sheet1')
+        # We need newline='' or extra rows are added to output1.csv
+        csv_file = open(path.join(target_dir, 'output1.csv'), 'w', newline='')
+        writer = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
+        for rownum in range(sheet.nrows):
+            writer.writerow(sheet.row_values(rownum))
+        csv_file.close()
+    except xlrd.biffh.XLRDError:
+        notifiCat.errorNotif(self, 'Not a supported file type!')

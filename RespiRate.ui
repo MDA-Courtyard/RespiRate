@@ -564,7 +564,14 @@ p, li { white-space: pre-wrap; }
     <addaction name="actionAbout"/>
     <addaction name="actionAbout_Qt"/>
    </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools</string>
+    </property>
+    <addaction name="actionConvert_to_CSV"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuTools"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -596,6 +603,14 @@ p, li { white-space: pre-wrap; }
   <action name="actionCheck_for_Update">
    <property name="text">
     <string>Check for Update</string>
+   </property>
+  </action>
+  <action name="actionConvert_to_CSV">
+   <property name="text">
+    <string>Convert to CSV</string>
+   </property>
+   <property name="whatsThis">
+    <string extracomment="Create a new .csv file with the contents of output1.xlsx"/>
    </property>
   </action>
  </widget>
