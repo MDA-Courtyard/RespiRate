@@ -91,10 +91,13 @@ def xOutput(self, toPrintList, workBook, sheetName):
 def convertCSV(self, target_dir, workBook):
     '''Convert the current output1.xls to a .csv file.'''
     try:
+        # Get the file name from the path and then drop the extension
+        name = workBook.split('/')[-1].split('.')[0]
+        print(name)
         wbook = xlrd.open_workbook(workBook)
         sheet = wbook.sheet_by_name('Sheet1')
-        # We need newline='' or extra rows are added to output1.csv
-        csv_file = open(path.join(target_dir, 'output1.csv'), 'w', newline='')
+        # We need newline='' or extra rows are added to the csv file
+        csv_file = open(path.join(target_dir, name+'.csv'), 'w', newline='')
         writer = csv.writer(csv_file, quoting=csv.QUOTE_ALL)
         for rownum in range(sheet.nrows):
             writer.writerow(sheet.row_values(rownum))
