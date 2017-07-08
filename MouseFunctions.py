@@ -93,7 +93,6 @@ def convertCSV(self, target_dir, workBook):
     try:
         # Get the file name from the path and then drop the extension
         name = workBook.split('/')[-1].split('.')[0]
-        print(name)
         wbook = xlrd.open_workbook(workBook)
         sheet = wbook.sheet_by_name('Sheet1')
         # We need newline='' or extra rows are added to the csv file

@@ -1,4 +1,4 @@
-## 0.0.5 (development)
+## 0.0.5 (07/07/2017)
  * Bugfix: stop the internal timer when opening a new file. This prevents a
     crash when loading a non-video file, after having already loaded a video.
  * Make sure loaded file is a video when 'Contour' is pressed.
