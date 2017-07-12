@@ -159,8 +159,8 @@ class Gui(QtWidgets.QMainWindow):
         wbook = str(wbook[0])
         if wbook is not '': # Make sure the file exists
             msg = ('<br>Convert spreadsheet to csv file?</br>'
-            '<b><br>Warning: this will overwrite any existing `output1.csv`</br>'
-            '<br>files in the RespiRate folder!</br></b>')
+            '<b><br>Warning: this will overwrite any existing csv files</br>'
+            '<br>with the same name in the RespiRate folder!</br></b>')
             conv = askQuestion(self, 'RespiRate', msg)
             if conv == 'yes':
                 mf.convertCSV(self, location, wbook)
