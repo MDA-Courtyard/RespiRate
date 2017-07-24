@@ -75,7 +75,7 @@ class Gui(QtWidgets.QMainWindow):
         self.timeInSec = 0
         self.totalCount = 0
         self.vid_dir = getcwd()
-        self.version = '0.0.5'
+        self.version = '0.0.6~development'
         self._process = QtCore.QProcess(self)
         self._timer = QtCore.QTimer(self)
         if self.cont == 0:
@@ -616,7 +616,6 @@ class Gui(QtWidgets.QMainWindow):
 
             # Ask if we want to export data to a spreadsheet
             export = askQuestion(self, 'RespiRate', '<br>Export data to spreadsheet?</br>')
-            print('export', export) #Debugging
             if export == 'yes':
                 for numba in range(0, self.numberOfMice):
                     videoName = path.splitext(path.basename(self.filename))[0]
