@@ -47,12 +47,12 @@ def xOutput(self, toPrintList, workBook, sheetName):
                     # Set up the spreadsheet
                     book = xlwt.Workbook()
                     sheet1 = book.add_sheet('Sheet1')
-                    sheet1.write(0, 0, 'Video #')
-                    sheet1.write(0, 1, 'Mouse #')
-                    sheet1.write(0, 2, 'Start Time')
-                    sheet1.write(0, 3, 'End Time')
-                    sheet1.write(0, 4, 'Total Time')
-                    sheet1.write(0, 5, 'Best RR')
+                    sheet1.write(0, 0, 'Video')
+                    sheet1.write(0, 1, 'Mouse')
+                    sheet1.write(0, 2, 'Start_Time')
+                    sheet1.write(0, 3, 'End_Time')
+                    sheet1.write(0, 4, 'Total_Time')
+                    sheet1.write(0, 5, 'Best_RR')
                     sheet1.write(0, 6, 'stdev')
                     book.save(file_path)
                     created_msg = ('Spreadsheet was created as `output1.xls` in'
