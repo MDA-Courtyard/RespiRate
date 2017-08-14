@@ -103,7 +103,7 @@ class Gui(QtWidgets.QMainWindow):
                 except IndexError as excpt:
                     # Return exception to terminal if run as script, but
                     # otherwise don't bother the user.
-                    print('type is: ', excpt.__class__.__name__)
+                    print('Config load error: ', excpt.__class__.__name__)
                     print_exc()
 
 
@@ -227,7 +227,6 @@ class Gui(QtWidgets.QMainWindow):
 
     def captureNextFrame(self):
         '''Capture frame and reverse RGB BGR and return opencv image'''
-        # try:
         if self.cont == 0:
             ret, readFrame = self.capture.read()
             self.currentFrame = cv2.cvtColor(readFrame, cv2.COLOR_BGR2RGB)
@@ -300,7 +299,7 @@ class Gui(QtWidgets.QMainWindow):
             except TypeError as excpt:
                 # Return exception to terminal if run as script, but otherwise
                 # don't bother user.
-                print('type is: ', excpt.__class__.__name__)
+                print('Config write error: ', excpt.__class__.__name__)
                 print_exc()
 
 
@@ -372,7 +371,6 @@ class Gui(QtWidgets.QMainWindow):
         self.slide.setMinimum(startTimeSec)
         self.slide.setMaximum(self.length + startTimeSec)
         self.slide.setSliderPosition(startTimeSec)
-        # self.captureNextFrame() #TODO This may not be needed - investigate!
         self._timer.start()
 
         incontours = []
