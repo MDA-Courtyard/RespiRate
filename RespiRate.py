@@ -580,13 +580,15 @@ class Gui(QtWidgets.QMainWindow):
                 plt.tight_layout() # Don't cut off the title and x-label
                 plt.show()
 
-                # Output respiratory rate and stdev to console; don't show if
-                # running standalone
-                print('Best: ' + str([round(elem, 3) for elem in best]) + '\n')
-                print('Best Stdev: ' + str([round(elem, 4) for elem in beststdev]) + '\n')
-
                 respRate = (60 * 30) / avgOfbest
                 bRespRate = (60 * 30) / avgOfbavg
+
+                # Output respiratory rate and stdev to console; don't show if
+                # running standalone
+                print('\nBest: ' + str([round(elem, 3) for elem in best]))
+                print('Best Stdev: ' + str([round(elem, 4) for elem in beststdev]))
+                print('Best Respiratory Rate: ', bRespRate, '\n')
+
                 respRates.append(respRate)
                 bRespRates.append(bRespRate)
                 minstdevs.append(minstdev)
@@ -720,7 +722,6 @@ def main():
     ex1 = Gui()
     ex1.setWindowTitle('RespiRate')
     ex1.setWindowIcon(QtGui.QIcon('RespiRate.ico'))
-    ex1.raise_()
     ex1.show()
     ex1.activateWindow()
     ex1._timer.stop()
