@@ -1,3 +1,12 @@
+# 0.0.6 (Development)
+ * Correct notification when generating a csv file from an existing xls file.
+ * Code cleanup.
+ * The spreadsheet header is cleaner. Multiple words are joined with an
+    underscore for easier indexing.
+ * Best respiratory rate for each mouse is returned to the console (when running
+    from source.)
+
+
 ## 0.0.5 (07/07/2017)
  * Bugfix: stop the internal timer when opening a new file. This prevents a
     crash when loading a non-video file, after having already loaded a video.
