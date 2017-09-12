@@ -1,4 +1,4 @@
-Instructions for building standalone executables for Windows. These
+Instructions for building portable executables for Windows. These
 instructions expect Python 3.6 (Anaconda is recommended).
 
 Please note that these are not requirements for installing or running RespiRate
@@ -8,7 +8,7 @@ executable yourself.
 
 ### Prerequisites
  - Python 3.6.  
- It is possible to build a standalone Windows executable with earlier versions
+ It is possible to build a portable Windows executable with earlier versions
  of Python 3, but you may need to adjust these instructions.
 
  Python 2 is **not** supported.
