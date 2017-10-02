@@ -228,7 +228,7 @@ class Gui(QtWidgets.QMainWindow):
     def captureNextFrame(self):
         '''Capture frame and reverse RGB BGR and return opencv image'''
         if self.cont == 0:
-            ret, readFrame = self.capture.read()
+            _, readFrame = self.capture.read()
             self.currentFrame = cv2.cvtColor(readFrame, cv2.COLOR_BGR2RGB)
             height, width = self.currentFrame.shape[:2]
             self.img = QtGui.QImage(self.currentFrame,
@@ -243,7 +243,7 @@ class Gui(QtWidgets.QMainWindow):
             self._timer.start()
 
         elif self.cont == 1:
-            ret, readFrame = self.capture.read()
+            _, readFrame = self.capture.read()
             self.currentFrame = cv2.cvtColor(readFrame, cv2.COLOR_BGR2RGB)
             height, width = self.currentFrame.shape[:2]
             self.img = QtGui.QImage(self.currentFrame,
@@ -338,7 +338,7 @@ class Gui(QtWidgets.QMainWindow):
         # Get the number of mice, start time, and length of measurement.
         mice = self.ui.lineEdit_mouseID.text()
         tsec = self.ui.lineEdit_startT.text()
-        self.lenOFMeas = self.ui.lineEdit_lenMeasure.text()
+        self.lenOfMeas = self.ui.lineEdit_lenMeasure.text()
 
         # Do a quick scan for errors and halt execution if necessary:
         # Was a video loaded before 'Contour' was pressed?
@@ -359,14 +359,14 @@ class Gui(QtWidgets.QMainWindow):
         # Time (in seconds) that we begin the measurement
         startTimeSec = (3600 * startTimehhmmss[0]) + (60 * startTimehhmmss[1]) + startTimehhmmss[2]
         self.startTimemsec = startTimeSec * 1000  # start-time in miliseconds
-        lenOfMeasmsec = int(self.lenOFMeas) * 1000
+        lenOfMeasmsec = int(self.lenOfMeas) * 1000
         self.endTimemsec = self.startTimemsec + lenOfMeasmsec  # ending time
         endTime = self.endTimemsec
         self.capture.set(0, self.endTimemsec)
         self.lastframe = self.capture.get(1)
         self.capture.set(0, self.startTimemsec)
         self.firstframe = self.capture.get(1)
-        self.length = int(self.lenOFMeas)
+        self.length = int(self.lenOfMeas)
         # Reset slide to show length of analysis time.
         self.slide.setMinimum(startTimeSec)
         self.slide.setMaximum(self.length + startTimeSec)
@@ -414,7 +414,7 @@ class Gui(QtWidgets.QMainWindow):
             self.capture.set(1, self.firstframe)
 
             # Take first frame and find corners in it
-            ret, old_frame = self.capture.read()
+            _, old_frame = self.capture.read()
             old_gray = cv2.cvtColor(old_frame, cv2.COLOR_BGR2GRAY)
             p0s = mf.ListOfLists(self.numberOfMice)
             for numba in range(0, self.numberOfMice):
@@ -441,7 +441,7 @@ class Gui(QtWidgets.QMainWindow):
             l = 0
 
             for num in range(np.int(self.firstframe), np.int(self.lastframe + 1)):
-                ret, frame = self.capture.read()
+                _, frame = self.capture.read()
                 frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
                 stzeros = []
                 for numba in range(0, self.numberOfMice):
@@ -652,7 +652,7 @@ class errorCheck:
         if self.filename == 0 or self.filename == u'':
             msg_video = '<br>You have not selected a video!</br>'
             errorNotif(self, msg_video)
-            return('error')
+            return 'error'
 
 
     def fileCheck(self):
@@ -663,7 +663,7 @@ class errorCheck:
         codec = self.capture.get(6)
         if codec == 0.0:
             errorNotif(self, msg_video)
-            return('error')
+            return 'error'
 
 
     def timeCheck(self, tsec):
@@ -695,15 +695,15 @@ class errorCheck:
         # Second and minute are not too high
         elif int(time_check[-1]) > 59 or int(time_check[-2]) > 59:
             errorNotif(self, msg_time)
-            return('error')
+            return 'error'
 
 
     def measLen(self):
         '''Make sure the measurement length makes sense.'''
-        if str(self.lenOFMeas).isdigit() is False:
+        if str(self.lenOfMeas).isdigit() is False:
             msg_len = '<br>The given length of measurement cannot be understood.</br>'
             errorNotif(self, msg_len)
-            return('error')
+            return 'error'
 
 
 
