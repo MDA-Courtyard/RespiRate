@@ -5,9 +5,13 @@
 import numpy as np
 import cv2
 import matplotlib as mpl
+
+
 """
 Various instructions for handling the external OpenCV windows.
 """
+
+
 class frameReader:
     '''
     Read frames from a video, with options to display,
@@ -43,9 +47,11 @@ class frameReader:
     def t2f(self, minutes, seconds):
         return round(self.video.get(5)) * (60 * minutes + seconds)
 
-#-------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+
 
 clickPoints = []
+
 
 def contour(image):
     '''Draw a contour on a grayscale image using mouse clicks.'''
@@ -110,7 +116,8 @@ def contour(image):
         elif key == ord('q'):
             return np.array(clickPoints)
 
-#-------------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+
 
 def insideContour(outline, image):
     '''Find all pixels inside a contour.'''

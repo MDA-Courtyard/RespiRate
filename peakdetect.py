@@ -8,7 +8,7 @@ from math import pi
 
 i = 10000
 x = np.linspace(0, 3.5 * pi, i)
-y = (0.3*np.sin(x) + np.sin(1.3 * x) + 0.9 * np.sin(4.2 * x) + 0.06 *
+y = (0.3 * np.sin(x) + np.sin(1.3 * x) + 0.9 * np.sin(4.2 * x) + 0.06 *
     np.random.randn(i))
 
 
@@ -18,12 +18,13 @@ def _datacheck_peakdetect(x_axis, y_axis):
 
     if len(y_axis) != len(x_axis):
         raise (ValueError,
-                'Input vectors y_axis and x_axis must have same length')
+            'Input vectors y_axis and x_axis must have same length')
 
     # needs to be a numpy array
     y_axis = np.array(y_axis)
     x_axis = np.array(x_axis)
     return x_axis, y_axis
+
 
 def peakdetect(y_axis, x_axis=None, lookahead=300, delta=0):
     '''
@@ -59,7 +60,7 @@ def peakdetect(y_axis, x_axis=None, lookahead=300, delta=0):
     '''
     max_peaks = []
     min_peaks = []
-    dump = []   #Used to pop the first hit which almost always is false
+    dump = []   # Used to pop the first hit which almost always is false
 
     # check input data
     x_axis, y_axis = _datacheck_peakdetect(x_axis, y_axis)
@@ -79,7 +80,7 @@ def peakdetect(y_axis, x_axis=None, lookahead=300, delta=0):
 
     # Only detect peak if there is 'lookahead' amount of points after it
     for index, (x, y) in enumerate(zip(x_axis[:-lookahead],
-                                        y_axis[:-lookahead])):
+            y_axis[:-lookahead])):
         if y > mx:
             mx = y
             mxpos = x
@@ -88,31 +89,31 @@ def peakdetect(y_axis, x_axis=None, lookahead=300, delta=0):
             mnpos = x
 
         # look for max
-        if y < mx-delta and mx != np.Inf:
+        if y < mx - delta and mx != np.Inf:
             # Maxima peak candidate found
             # look ahead in signal to ensure that this is a peak and not jitter
-            if y_axis[index:index+lookahead].max() < mx:
+            if y_axis[index:index + lookahead].max() < mx:
                 max_peaks.append([mxpos, mx])
                 dump.append(True)
                 # set algorithm to only find minima now
                 mx = np.Inf
                 mn = np.Inf
-                if index+lookahead >= length:
+                if index + lookahead >= length:
                     # end is within lookahead no more peaks can be found
                     break
                 continue
 
         # look for min
-        if y > mn+delta and mn != -np.Inf:
+        if y > mn + delta and mn != -np.Inf:
             # Minima peak candidate found
             # look ahead in signal to ensure that this is a peak and not jitter
-            if y_axis[index:index+lookahead].min() > mn:
+            if y_axis[index:index + lookahead].min() > mn:
                 min_peaks.append([mnpos, mn])
                 dump.append(False)
                 # set algorithm to only find maxima now
                 mn = -np.Inf
                 mx = -np.Inf
-                if index+lookahead >= length:
+                if index + lookahead >= length:
                     # end is within lookahead no more peaks can be found
                     break
 

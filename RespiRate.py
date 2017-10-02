@@ -5,7 +5,6 @@
 import ctypes
 import itertools
 from os import getcwd, makedirs, path
-import re
 from platform import platform, system
 import sys
 from traceback import print_exc
@@ -20,6 +19,7 @@ import peakdetect as pd
 import matplotlib.pyplot as plt
 from matplotlib import rcParams
 from notifiCat import errorNotif, askQuestion, infoNotif
+
 
 class Gui(QtWidgets.QMainWindow):
     def __init__(self, parent=None):
@@ -89,12 +89,12 @@ class Gui(QtWidgets.QMainWindow):
     def load_config(self):
         '''Open and read the config file.'''
         # If the file does not exist (first run)
-        if path.isfile(self.config) == False:
+        if path.isfile(self.config) is False:
             with open(self.config, 'w+') as f:
                 f.close()
 
         # The file exist - get the location of the last loaded video.
-        elif path.isfile(self.config) == True:
+        elif path.isfile(self.config) is True:
             with open(self.config, 'r+') as f:
                 # We need try/except in case the config file is empty
                 try:
@@ -112,11 +112,11 @@ class Gui(QtWidgets.QMainWindow):
         resp = requests.get('https://github.com/MDA-Courtyard/RespiRate/releases/')
         data = str(resp.text)
         index = data.find('RespiRate/releases/tag/v')
-        upstream_ver =  data[index + 32] + data[index + 33] + data[index + 34] + data[index + 35] + data[index + 36]
+        upstream_ver = data[index + 32] + data[index + 33] + data[index + 34] + data[index + 35] + data[index + 36]
         if upstream_ver > self.version:
-            url = str("https://github.com/MDA-Courtyard/RespiRate/releases/tag/v"+upstream_ver)
-            msg_up = ('<p>Version '+upstream_ver+' has been released.'
-            '<br>Download it from <a href="%s">here</a>.</br></p>' %url)
+            url = str("https://github.com/MDA-Courtyard/RespiRate/releases/tag/v" + upstream_ver)
+            msg_up = ('<p>Version ' + upstream_ver + 'has been released.'
+            '<br>Download it from <a href="%s">here</a>.</br></p>' % url)
             infoNotif(self, 'RespiRate', msg_up)
         else:
             msg_up = 'You have the latest available version of RespiRate.'
@@ -126,7 +126,7 @@ class Gui(QtWidgets.QMainWindow):
     def About(self):
         '''Brief description of the program.'''
         title = 'About'
-        msg = ('<p><br><b>RespiRate v'+self.version+'</b></br>'
+        msg = ('<p><br><b>RespiRate v' + self.version + '</b></br>'
         '<br>Copyright (C) 2017 Ashlar Ruby</br>'
         '<br>Licensed under the MIT license.</br></p>'
         '<p>This program uses opencv_ffmpeg320 libraries, released'
@@ -145,7 +145,7 @@ class Gui(QtWidgets.QMainWindow):
 
     def closeAll(self):
         '''Shut down cleanly when Quit is clicked.'''
-        if isinstance(self.capture, int) == False: # A video is loaded
+        if isinstance(self.capture, int) is False:  # A video is loaded
             self.capture.release()
         cv2.destroyAllWindows()
         self._timer.stop()
@@ -157,7 +157,7 @@ class Gui(QtWidgets.QMainWindow):
         location = path.join(path.expanduser('~'), 'RespiRate')
         wbook = QtWidgets.QFileDialog.getOpenFileName(self, 'Open File', location)
         wbook = str(wbook[0])
-        if wbook is not '': # Make sure the file exists
+        if wbook is not '':  # Make sure the file exists
             msg = ('<br>Convert spreadsheet to csv file?</br>'
             '<b><br>Warning: this will overwrite any existing csv files</br>'
             '<br>with the same name in the RespiRate folder!</br></b>')
@@ -181,7 +181,7 @@ class Gui(QtWidgets.QMainWindow):
             self.ui.pushButton_SelectST.setEnabled(False)
             return
 
-        print(self.filename+'\n')
+        print(self.filename + '\n')
         self.vid_dir = path.dirname(path.realpath(self.filename))
         self.capture = cv2.VideoCapture(self.filename)
         self.capture.open(self.filename)
@@ -201,7 +201,7 @@ class Gui(QtWidgets.QMainWindow):
         self.ui.lcdNumber.display('00:00:00')
         self.slide.setSliderPosition(0)
         self.cont = 0
-        title = 'RespiRate - '+self.filename
+        title = 'RespiRate - ' + self.filename
         self.setWindowTitle(title)
         self.TIME = self.endTimemsec
         self.ui.pushButton_SelectST.setEnabled(True)
@@ -216,12 +216,12 @@ class Gui(QtWidgets.QMainWindow):
         ssheet = str(ssheet[0])
         if not ssheet == '':
             print('Opening %r' % ssheet)
-            if system() == 'Windows':
+            if system() is 'Windows':
                 # We have to run the command through a shell in Windows
                 self._process.start('cmd.exe', ['/c', 'start', ssheet])
-            elif system() == 'Darwin':
+            elif system() is 'Darwin':
                 self._process.start('open', [ssheet])
-            elif system() =='Linux':
+            elif system() is 'Linux':
                 self._process.start('xdg-open', [ssheet])
 
 
@@ -230,7 +230,7 @@ class Gui(QtWidgets.QMainWindow):
         if self.cont == 0:
             ret, readFrame = self.capture.read()
             self.currentFrame = cv2.cvtColor(readFrame, cv2.COLOR_BGR2RGB)
-            height,width = self.currentFrame.shape[:2]
+            height, width = self.currentFrame.shape[:2]
             self.img = QtGui.QImage(self.currentFrame,
                               width,
                               height,
@@ -244,8 +244,8 @@ class Gui(QtWidgets.QMainWindow):
 
         elif self.cont == 1:
             ret, readFrame = self.capture.read()
-            self.currentFrame = cv2.cvtColor(readFrame,cv2.COLOR_BGR2RGB)
-            height,width = self.currentFrame.shape[:2]
+            self.currentFrame = cv2.cvtColor(readFrame, cv2.COLOR_BGR2RGB)
+            height, width = self.currentFrame.shape[:2]
             self.img = QtGui.QImage(self.currentFrame,
                               width,
                               height,
@@ -358,9 +358,9 @@ class Gui(QtWidgets.QMainWindow):
         startTimehhmmss = [int(x) for x in tsec.split(':')]
         # Time (in seconds) that we begin the measurement
         startTimeSec = (3600 * startTimehhmmss[0]) + (60 * startTimehhmmss[1]) + startTimehhmmss[2]
-        self.startTimemsec = startTimeSec * 1000    # start-time in miliseconds
+        self.startTimemsec = startTimeSec * 1000  # start-time in miliseconds
         lenOfMeasmsec = int(self.lenOFMeas) * 1000
-        self.endTimemsec = self.startTimemsec + lenOfMeasmsec # ending time
+        self.endTimemsec = self.startTimemsec + lenOfMeasmsec  # ending time
         endTime = self.endTimemsec
         self.capture.set(0, self.endTimemsec)
         self.lastframe = self.capture.get(1)
@@ -400,14 +400,14 @@ class Gui(QtWidgets.QMainWindow):
 
             self.cont = 2
             # Parameters for Shi-Tomasi corner detection
-            feature_params = dict( maxCorners = 10,
-                              qualityLevel = 0.3,
-                              minDistance = 7,
-                              blockSize = 7)
+            feature_params = dict(maxCorners=10,
+                              qualityLevel=0.3,
+                              minDistance=7,
+                              blockSize=7)
             # Parameters for Lucas-Kanade optical flow
-            lk_params = dict( winSize  = (15, 15),
-                          maxLevel = 2,
-                          criteria = (cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
+            lk_params = dict(winSize=(15, 15),
+                          maxLevel=2,
+                          criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
 
             # Create some random colors
             color = np.random.randint(0, 255, (100, 3))
@@ -418,7 +418,7 @@ class Gui(QtWidgets.QMainWindow):
             old_gray = cv2.cvtColor(old_frame, cv2.COLOR_BGR2GRAY)
             p0s = mf.ListOfLists(self.numberOfMice)
             for numba in range(0, self.numberOfMice):
-                p0s[numba] = cv2.goodFeaturesToTrack(old_gray, mask = incontours[numba], **feature_params)
+                p0s[numba] = cv2.goodFeaturesToTrack(old_gray, mask=incontours[numba], **feature_params)
 
             # Create a mask image for drawing purposes
             mask = np.zeros_like(old_frame)
@@ -441,12 +441,12 @@ class Gui(QtWidgets.QMainWindow):
             l = 0
 
             for num in range(np.int(self.firstframe), np.int(self.lastframe + 1)):
-                ret,frame = self.capture.read()
+                ret, frame = self.capture.read()
                 frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
                 stzeros = []
-                for numba in range(0,self.numberOfMice):
+                for numba in range(0, self.numberOfMice):
                     stzeros.append(np.array([]))
-                for numba in range(0,self.numberOfMice):
+                for numba in range(0, self.numberOfMice):
                     # Calculate optical flow
                     p1s[numba], sts[numba], errs[numba] = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, p0s[numba], None, **lk_params)
                     # Select good points
@@ -463,16 +463,16 @@ class Gui(QtWidgets.QMainWindow):
                                     del yPoints[numba][i]
 
                     # Draw the tracks
-                    for i,(new,old) in enumerate(list(zip(good_news[numba],good_olds[numba]))):
-                        a,b = new.ravel()
-                        c,d = old.ravel()
+                    for i, (new, old) in enumerate(list(zip(good_news[numba], good_olds[numba]))):
+                        a, b = new.ravel()
+                        c, d = old.ravel()
                         xPoints[numba][i].append([])
                         yPoints[numba][i].append([])
                         xPoints[numba][i][l].append(c)
                         yPoints[numba][i][l].append(d)
-                        mask = cv2.line(mask, (a,b),(c,d), color[i].tolist(), 2)
-                        frame = cv2.circle(frame,(a,b),5,color[i].tolist(),-1)
-                    p0s[numba] = good_news[numba].reshape(-1,1,2) # Update the previous points
+                        mask = cv2.line(mask, (a, b), (c, d), color[i].tolist(), 2)
+                        frame = cv2.circle(frame, (a, b), 5, color[i].tolist(), -1)
+                    p0s[numba] = good_news[numba].reshape(-1, 1, 2)  # Update the previous points
                 if np.any(sts[numba]) == 0:
                         endTime = self.capture.get(0)
                         break
@@ -503,7 +503,7 @@ class Gui(QtWidgets.QMainWindow):
 
                 for i in range(len(p0s[numba])):
                     pointx[i] = xPoints[numba][i]
-                    peaksx[i] = pd.peakdetect(pointx[i], None, 4, 0) #3 for mice, 20 for human
+                    peaksx[i] = pd.peakdetect(pointx[i], None, 4, 0)  # 3 for mice, 20 for human
                     pointy[i] = yPoints[numba][i]
                     peaksy[i] = pd.peakdetect(pointy[i], None, 4, 0)
 
@@ -518,14 +518,14 @@ class Gui(QtWidgets.QMainWindow):
                         distBTpeaksyb[ii].append(peaksy[ii][1][i + 1][0] - peaksy[ii][1][i][0])
 
                 for i in range(len(p0s[numba])):
-                    avgs[i].append(sum(distBTpeaksxt[i]) / len(distBTpeaksxt[i])) #xtop
-                    stdevs[i].append(np.std(distBTpeaksxt[i]) / avgs[i][0]) #xtop
-                    avgs[i].append(sum(distBTpeaksxb[i]) / len(distBTpeaksxb[i])) #xbottom
-                    stdevs[i].append(np.std(distBTpeaksxb[i]) / avgs[i][1]) #xbottom
-                    avgs[i].append(sum(distBTpeaksyt[i]) / len(distBTpeaksyt[i])) #ytop
-                    stdevs[i].append(np.std(distBTpeaksyt[i]) / avgs[i][2]) #ytop
-                    avgs[i].append(sum(distBTpeaksyb[i]) / len(distBTpeaksyb[i])) #ybottom
-                    stdevs[i].append(np.std(distBTpeaksyb[i]) / avgs[i][3]) #ybottom
+                    avgs[i].append(sum(distBTpeaksxt[i]) / len(distBTpeaksxt[i]))  # xtop
+                    stdevs[i].append(np.std(distBTpeaksxt[i]) / avgs[i][0])  # xtop
+                    avgs[i].append(sum(distBTpeaksxb[i]) / len(distBTpeaksxb[i]))  # xbottom
+                    stdevs[i].append(np.std(distBTpeaksxb[i]) / avgs[i][1])  # xbottom
+                    avgs[i].append(sum(distBTpeaksyt[i]) / len(distBTpeaksyt[i]))  # ytop
+                    stdevs[i].append(np.std(distBTpeaksyt[i]) / avgs[i][2])  # ytop
+                    avgs[i].append(sum(distBTpeaksyb[i]) / len(distBTpeaksyb[i]))  # ybottom
+                    stdevs[i].append(np.std(distBTpeaksyb[i]) / avgs[i][3])  # ybottom
 
                 merged = list(itertools.chain.from_iterable(stdevs))
                 minst = min(merged)
@@ -548,7 +548,7 @@ class Gui(QtWidgets.QMainWindow):
                 avgOfbavg = sum(bavg) / len(bavg)
 
                 font = {'family': 'sans-serif',
-                        'color':  'black',
+                        'color': 'black',
                         'weight': 'normal',
                         'size': 12}
 
@@ -565,19 +565,19 @@ class Gui(QtWidgets.QMainWindow):
                 if plt.fignum_exists('Mouse %s' % mouseNumList[numba]):
                     plt.close('Mouse %s' % mouseNumList[numba])
 
-                plt.ion() # cosmetic, QCoreApplication error without this
-                plt.figure('Mouse %s' % mouseNumList[numba]) # Window name
-                plt.plot(xaxisT, pointy[numba], color='#3399FF') # Curve
-                plt.plot(xaxisYtopT, list(zip(*peaksy[numba][0]))[1], 'o', color='red', markersize=4) # Peak
-                plt.plot(xaxisYbottomT, list(zip(*peaksy[numba][1]))[1], 'o', color='#FF9966', markersize=4) # Valley
-                plt.title('Mouse '+str(mouseNumList[numba]), fontdict=font)
+                plt.ion()  # cosmetic, QCoreApplication error without this
+                plt.figure('Mouse %s' % mouseNumList[numba])  # Window name
+                plt.plot(xaxisT, pointy[numba], color='#3399FF')  # Curve
+                plt.plot(xaxisYtopT, list(zip(*peaksy[numba][0]))[1], 'o', color='red', markersize=4)  # Peak
+                plt.plot(xaxisYbottomT, list(zip(*peaksy[numba][1]))[1], 'o', color='#FF9966', markersize=4)  # Valley
+                plt.title('Mouse ' + str(mouseNumList[numba]), fontdict=font)
 
                 pointPos[numba].append(pointy[numba])
                 peakPos[numba].append(peaksy[numba])
                 plt.xlabel('Time (s)', fontdict=font)
                 frame1 = plt.gca()
                 frame1.axes.get_yaxis().set_ticks([])
-                plt.tight_layout() # Don't cut off the title and x-label
+                plt.tight_layout()  # Don't cut off the title and x-label
                 plt.show()
 
                 respRate = (60 * 30) / avgOfbest
@@ -592,7 +592,7 @@ class Gui(QtWidgets.QMainWindow):
                 respRates.append(respRate)
                 bRespRates.append(bRespRate)
                 minstdevs.append(minstdev)
-                for i,(bp,ind) in enumerate(list(zip(bestPoints, distInd))):
+                for i, (bp, ind) in enumerate(list(zip(bestPoints, distInd))):
                     if ind == 0:
                         dists[numba].append(distBTpeaksxt[bp])
                     if ind == 1:
@@ -634,7 +634,7 @@ class Gui(QtWidgets.QMainWindow):
         except (TypeError, ZeroDivisionError, IndexError) as excpt:
             print('type is: ', excpt.__class__.__name__)
             print_exc()
-            msg = ('<br>The selected region on '+ str(mouseNumList[numba])+
+            msg = ('<br>The selected region on ' + str(mouseNumList[numba]) +
                 ' is not suitable for respiration measurements.</br>')
             errorNotif(self, msg)
 
@@ -679,7 +679,7 @@ class errorCheck:
 
         # Only integers
         for num in time_check:
-            if num.isdigit() == False:
+            if num.isdigit() is False:
                 print('false')
                 errorNotif(self, msg_time)
                 return('error')
@@ -700,7 +700,7 @@ class errorCheck:
 
     def measLen(self):
         '''Make sure the measurement length makes sense.'''
-        if str(self.lenOFMeas).isdigit() == False:
+        if str(self.lenOFMeas).isdigit() is False:
             msg_len = '<br>The given length of measurement cannot be understood.</br>'
             errorNotif(self, msg_len)
             return('error')
@@ -709,12 +709,12 @@ class errorCheck:
 
 def main():
 
-    if system() == 'Windows': # Needed to display the icon in the taskbar
-        if not 'Vista' in platform(): # Vista doesn't recognize this but works anyway.
+    if system() == 'Windows':  # Needed to display the icon in the taskbar
+        if 'Vista' not in platform():  # Vista doesn't recognize this but works anyway.
             myappid = 'RespiRate'
             ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
-    app=QtWidgets.QApplication.instance()
+    app = QtWidgets.QApplication.instance()
 
     if not app:
         app = QtWidgets.QApplication(sys.argv)

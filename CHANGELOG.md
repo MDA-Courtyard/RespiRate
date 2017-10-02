@@ -1,3 +1,7 @@
+# 0.0.7 (development)
+ * Code cleanup and style improvements with flake8 linter.
+ * Removed unused import 're' from RespiRate.py
+
 # 0.0.6 (09/12/2017)
  * Correct notification when generating a csv file from an existing xls file.
  * Code cleanup.
