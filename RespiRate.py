@@ -75,7 +75,7 @@ class Gui(QtWidgets.QMainWindow):
         self.timeInSec = 0
         self.totalCount = 0
         self.vid_dir = getcwd()
-        self.version = '0.0.6~development'
+        self.version = '0.0.7~development'
         self._process = QtCore.QProcess(self)
         self._timer = QtCore.QTimer(self)
         if self.cont == 0:
@@ -706,11 +706,9 @@ class errorCheck:
             return 'error'
 
 
-
 def main():
-
     if system() == 'Windows':  # Needed to display the icon in the taskbar
-        if 'Vista' not in platform():  # Vista doesn't recognize this but works anyway.
+        if 'Vista' not in platform():  # Vista doesn't recognize this option.
             myappid = 'RespiRate'
             ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
