@@ -125,6 +125,10 @@ class Gui(QtWidgets.QMainWindow):
 
     def About(self):
         '''Brief description of the program.'''
+        issuesUrl = 'href="https://github.com/MDA-Courtyard/RespiRate/issues"'
+        licenseUrl = ('href="https://github.com/MDA-Courtyard/RespiRate/blob/'
+            'master/COPYING.md"')
+
         title = 'About'
         msg = ('<p><br><b>RespiRate v' + self.version + '</b></br>'
         '<br>Copyright (C) 2017 Ashlar Ruby</br>'
@@ -133,8 +137,9 @@ class Gui(QtWidgets.QMainWindow):
         '<br>and copyrighted 2001 under the LGPL by Fabrice Bellard,</br>'
         '<br>and the PyQt5 collection of graphical toolkits.</br></p>'
         '<p><a href="https://github.com/MDA-Courtyard/RespiRate">Home Page</a>'
-        '<br><a href="https://github.com/MDA-Courtyard/RespiRate/issues">Help</a></br>'
-        '<br><a href="https://github.com/MDA-Courtyard/RespiRate/blob/master/COPYING.md">Contributors and License</a></br></p>')
+        '<br><a %s>Help</a></br>'
+        '<br><a %s>Contributors and License</a></br></p>'
+        % (issuesUrl, licenseUrl))
         QtWidgets.QMessageBox.about(self, title, msg)
 
 
