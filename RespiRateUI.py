@@ -99,6 +99,7 @@ class Ui_MainWindow(object):
         self.textBrowser_Output.setSizePolicy(sizePolicy)
         self.textBrowser_Output.setMaximumSize(QtCore.QSize(800, 16777215))
         self.textBrowser_Output.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.textBrowser_Output.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
         self.textBrowser_Output.setObjectName("textBrowser_Output")
         self.gridLayout_4.addWidget(self.textBrowser_Output, 1, 0, 1, 3)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents_3)
