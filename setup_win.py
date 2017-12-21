@@ -35,7 +35,5 @@ shutil.copyfile('RespiRate.ico', pwd+'\dist\RespiRate\RespiRate.ico')
 
 # We require ffmpeg. Pyinstaller fails to build a .dll for it in Windows, so we
 # must copy a prebuild .dll to the proper location.
-if platform.machine() == 'AMD64'  or 'x86_64' and platform.system() == 'Windows':
-    shutil.copyfile('opencv_ffmpeg320_64.dll', pwd+'\dist\RespiRate\opencv_ffmpeg320_64.dll')
-elif platform.machine() == 'i386' and platform.system() == 'Windows':
-    shutil.copyfile('opencv_ffmpeg320.dll', pwd+'\dist\RespiRate\opencv_ffmpeg320.dll')
+shutil.copyfile('opencv_ffmpeg320_64.dll', pwd+'\dist\RespiRate\opencv_ffmpeg320_64.dll')
+shutil.copyfile('opencv_ffmpeg320.dll', pwd+'\dist\RespiRate\opencv_ffmpeg320.dll')
