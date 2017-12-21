@@ -1,6 +1,9 @@
-# 0.0.7 (development)
+# 0.0.7 (12/20/2017)
  * Code cleanup and style improvements with flake8 linter.
  * Removed unused import 're' from RespiRate.py
+ * (Bundled .exe files) Downgrade to Python 3.5 and PyInstaller 3.2.1 to build
+ .exe files since PyInstaller 3.6 currently has some problems with Qt programs -
+ see https://github.com/pyinstaller/pyinstaller/issues/2659
 
 # 0.0.6 (09/12/2017)
  * Correct notification when generating a csv file from an existing xls file.

@@ -4,6 +4,7 @@ data/
 pyinstaller/
 __pycache__/
 Output/
+.idea/
 
 build.bat
 build32.bat

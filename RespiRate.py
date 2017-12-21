@@ -75,7 +75,7 @@ class Gui(QtWidgets.QMainWindow):
         self.timeInSec = 0
         self.totalCount = 0
         self.vid_dir = getcwd()
-        self.version = '0.0.7~development'
+        self.version = '0.0.7'
         self._process = QtCore.QProcess(self)
         self._timer = QtCore.QTimer(self)
         if self.cont == 0:

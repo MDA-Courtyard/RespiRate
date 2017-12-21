@@ -22,7 +22,7 @@ if os.path.exists('dist') == True:
 
 main = ['pyinstaller']
 excludes = ['--exclude-module=tkinter']
-opts = ['--noconsole', '--clean', '--icon=RespiRate.ico',]
+opts = ['--noconsole', '--clean', '--icon=RespiRate.ico']
 target = ['RespiRate.py']
 
 cmd = main + excludes + opts + target
