@@ -8,8 +8,8 @@ from math import pi
 
 i = 10000
 x = np.linspace(0, 3.5 * pi, i)
-y = (0.3 * np.sin(x) + np.sin(1.3 * x) + 0.9 * np.sin(4.2 * x) + 0.06 *
-    np.random.randn(i))
+y = (0.3 * np.sin(x) + np.sin(1.3 * x) + 0.9 * np.sin(4.2 * x) +
+     0.06 * np.random.randn(i))
 
 
 def _datacheck_peakdetect(x_axis, y_axis):
@@ -17,7 +17,7 @@ def _datacheck_peakdetect(x_axis, y_axis):
         x_axis = range(len(y_axis))
 
     if len(y_axis) != len(x_axis):
-        raise (ValueError,
+        raise ValueError(
             'Input vectors y_axis and x_axis must have same length')
 
     # needs to be a numpy array
@@ -27,7 +27,7 @@ def _datacheck_peakdetect(x_axis, y_axis):
 
 
 def peakdetect(y_axis, x_axis=None, lookahead=300, delta=0):
-    '''
+    """
     Converted from/based on a MATLAB script at:
     http://billauer.co.il/peakdet.html
 
@@ -57,30 +57,29 @@ def peakdetect(y_axis, x_axis=None, lookahead=300, delta=0):
         to get the average peak value do: np.mean(max_peaks, 0)[1] on the
         results to unpack one of the lists into x, y coordinates do:
         x, y = zip(*tab)
-    '''
+    """
     max_peaks = []
     min_peaks = []
-    dump = []   # Used to pop the first hit which almost always is false
+    dump = []  # Used to pop the first hit which almost always is false
 
     # check input data
     x_axis, y_axis = _datacheck_peakdetect(x_axis, y_axis)
     # store data length for later use
     length = len(y_axis)
 
-
     # perform some checks
     if lookahead < 1:
-        raise(ValueError, "Lookahead must be '1' or above in value")
+        raise ValueError("Lookahead must be '1' or above in value")
     if not (np.isscalar(delta) and delta >= 0):
-        raise(ValueError, 'delta must be a positive number')
+        raise ValueError('delta must be a positive number')
 
     # maxima and minima candidates are temporarily stored in
     # mx and mn respectively
     mn, mx = np.Inf, -np.Inf
 
     # Only detect peak if there is 'lookahead' amount of points after it
-    for index, (x, y) in enumerate(zip(x_axis[:-lookahead],
-            y_axis[:-lookahead])):
+    for index, (x,
+                y) in enumerate(zip(x_axis[:-lookahead], y_axis[:-lookahead])):
         if y > mx:
             mx = y
             mxpos = x
@@ -116,7 +115,6 @@ def peakdetect(y_axis, x_axis=None, lookahead=300, delta=0):
                 if index + lookahead >= length:
                     # end is within lookahead no more peaks can be found
                     break
-
 
     # Remove the false hit on the first value of the y_axis
     try:

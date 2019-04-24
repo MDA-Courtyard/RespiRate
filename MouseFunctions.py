@@ -31,7 +31,7 @@ def find(stdevs, minstvar):
 
 
 def xOutput(self, toPrintList, workBook, sheetName):
-    '''Export data to spreadsheet for easy review and analysis.'''
+    """Export data to spreadsheet for easy review and analysis."""
     if workBook == 0 and sheetName == 0:
         msg = '<br>Data was not saved to spreadsheet!</br>'
         notifiCat.errorNotif(self, msg)
@@ -41,8 +41,10 @@ def xOutput(self, toPrintList, workBook, sheetName):
             dir_path = path.join(path.expanduser('~'), 'RespiRate')
             file_path = path.join(dir_path, workBook)
             if path.isfile(file_path) is False:
-                q = ('<p>A suitable spreadsheet was not found.'
-                '<br>Would you like to generate one automatically?</br></p>')
+                q = (
+                    '<p>A suitable spreadsheet was not found.'
+                    '<br>Would you like to generate one automatically?</br></p>'
+                )
                 new = notifiCat.askQuestion(self, 'No spreadsheet.', q)
                 if new == 'yes':
                     # Test if the folder exists. It might even if the file does
@@ -60,16 +62,17 @@ def xOutput(self, toPrintList, workBook, sheetName):
                     sheet1.write(0, 5, 'Best_RR')
                     sheet1.write(0, 6, 'stdev')
                     book.save(file_path)
-                    created_msg = ('Spreadsheet was created as `output1.xls` in'
-                            ' the RespiRate folder.')
+                    created_msg = (
+                        'Spreadsheet was created as `output1.xls` in'
+                        ' the RespiRate folder.')
                     notifiCat.infoNotif(self, 'Success!', created_msg)
                 else:
                     noexpt_msg = 'Data was not exported to a spreadsheet.'
                     notifiCat.infoNotif(self, 'Not Exported', noexpt_msg)
                     return
             # The file exists (or was just created) - now write output.
-            wb = xlrd.open_workbook(file_path)   # output1.xls
-            sheet = wb.sheet_by_name(sheetName)   # Sheet1
+            wb = xlrd.open_workbook(file_path)  # output1.xls
+            sheet = wb.sheet_by_name(sheetName)  # Sheet1
             rb = copy(wb)
             ws = rb.get_sheet(0)
             row = 0
@@ -81,21 +84,22 @@ def xOutput(self, toPrintList, workBook, sheetName):
                     cell = sheet.cell(row, 0)
             except IndexError:
                 print('index error')  # TODO: Why do we get this for every run?
-            for i in range(0, len(toPrintList)):
-                ws.write(row, col, toPrintList[i])
+            for item in toPrintList:
+                ws.write(row, col, item)
                 col = col + 1
             rb.save(file_path)
         except IOError:
             # If we get this far, the spreadsheet cannot be opened (most likely
             # it is already opened in Excel or another program). Check it, close
             # it, and rerun it. Working now?
-            err_msg = ('Data cannot be exported!'
+            err_msg = (
+                'Data cannot be exported!'
                 '<br>Please check if the spreadsheet is already opened.</br>')
             notifiCat.errorNotif(self, err_msg)
 
 
 def convertCSV(self, target_dir, workBook):
-    '''Convert the current output1.xls to a .csv file.'''
+    """Convert the current output1.xls to a .csv file."""
     try:
         # Get the file name from the path and then drop the extension
         name = workBook.split('/')[-1].split('.')[0]

@@ -3,16 +3,16 @@ RespiRate was written by the following authors:
  - S. Gay
 
 Additionally, we use portions of code published by the following authors:
- - Fabrice Bellard  
+ - Fabrice Bellard
     opencv_ffmpeg320*.dll
- - Sixten Bergman  
+ - Sixten Bergman
     peakdetect.py
 
 We use PyQt5 to provide our graphical interfaces, and OpenCv for the video
 analysis:
- - PyQt  
+ - PyQt
     https://sourceforge.net/projects/pyqt
- - OpenCv  
+ - OpenCv
     http://opencv.org/
 
 
@@ -21,7 +21,7 @@ All source and binary files, with the exception of `opencv_ffmpeg320.dll` and
 The opencv_ffmpeg320.dll and opencv_ffmpeg320_64.dll files are licensed under
 the LGPL v2.1 license, also reproduced below.
 
-## MIT License:  
+## MIT License:
 Copyright (C) 2017 A. Rubinstein and S. Gay
 
 Permission is hereby granted, free of charge, to any person obtaining

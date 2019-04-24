@@ -1,16 +1,41 @@
+# Folders
+.idea/
+.vs/
+.vscode/
+Data/
+data/
 build/
 dist/
-data/
+env/
 pyinstaller/
-__pycache__/
-Output/
-.idea/
+venv/
+*__pycache__*
+*.ipynb_checkpoints*
+*.pytest_cache*
 
-build.bat
-build32.bat
-output1.xls
-*.mp4
+# Files
+*.cer
+*.csv
+*.db
+*.dcm
+*.exe
+*.h5
 *.iss
+*.jpg
+*.json
+*.mp4
+*.npy
+*.pdf
+*.png
+*.pyc
 *.spec
+*.txt
+*.xlsx
+build*.bat
 
+# To override for a certain file,
+# prefix the line with "!"
+# For example, to allow git to track
+# a figure named Figures/setup.png, add the line
+# !Figures/setup.png
 !sample.mp4

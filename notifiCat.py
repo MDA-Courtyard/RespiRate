@@ -4,14 +4,14 @@
 # Licensed under the MIT license. See COPYING.md for details.
 from PyQt5.QtWidgets import QWidget, QMessageBox
 # Meow
-'''
+"""
 Use me to display notifications. I can be used in multiple functions
 simultaneously so you don't end up with redundant/conflicting code.
-'''
+"""
 
 
 def errorNotif(self, msg):
-    '''Display an error or warning message.'''
+    """Display an error or warning message."""
     # Used in RespiRate and MouseFunctions
     if self == 'noself':
         self = QWidget()
@@ -19,7 +19,7 @@ def errorNotif(self, msg):
 
 
 def infoNotif(self, title, msg):
-    '''Display a notification message.'''
+    """Display a notification message."""
     # Used in RespiRate and MouseFunctions
     if self == 'noself':
         self = QWidget()
@@ -27,7 +27,7 @@ def infoNotif(self, title, msg):
 
 
 def askQuestion(self, title, msg):
-    '''Ask a question with a yes/no dialog.'''
+    """Ask a question with a yes/no dialog."""
     # Used in RespiRate and MouseFunctions
     # We can't use QMessageBox.question because it creates a modal dialog (i.e
     # it blocks viewing/interacting with other RespiRate windows). This means
@@ -46,10 +46,9 @@ def askQuestion(self, title, msg):
     ask.show()
     retval = ask.exec_()
 
-
     if retval == QMessageBox.Yes:
         ans = 'yes'
     else:
         ans = 'no'
 
-    return(ans)
+    return ans

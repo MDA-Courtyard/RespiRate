@@ -5,18 +5,17 @@
 import numpy as np
 import cv2
 import matplotlib as mpl
-
-
 """
 Various instructions for handling the external OpenCV windows.
 """
 
 
 class frameReader:
-    '''
+    """
     Read frames from a video, with options to display,
     deinterlace, and rectify the images.
-    '''
+    """
+
     def __init__(self, videoFile, **kwargs):
         self.video = cv2.VideoCapture(videoFile)
         self.videoFile = videoFile
@@ -47,14 +46,14 @@ class frameReader:
     def t2f(self, minutes, seconds):
         return round(self.video.get(5)) * (60 * minutes + seconds)
 
-# ------------------------------------------------------------------------------
 
+# ------------------------------------------------------------------------------
 
 clickPoints = []
 
 
 def contour(image):
-    '''Draw a contour on a grayscale image using mouse clicks.'''
+    """Draw a contour on a grayscale image using mouse clicks."""
 
     global clickPoints
     clickPoints = []
@@ -116,11 +115,12 @@ def contour(image):
         elif key == ord('q'):
             return np.array(clickPoints)
 
+
 # -----------------------------------------------------------------------------
 
 
 def insideContour(outline, image):
-    '''Find all pixels inside a contour.'''
+    """Find all pixels inside a contour."""
 
     path = mpl.path.Path(outline)
     x, y = np.meshgrid(range(image.shape[1]), range(image.shape[0]))
